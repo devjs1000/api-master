@@ -8,12 +8,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { items } from "./items";
+import { items } from "@/pages/layout/app-sidebar/items";
 import { app_config } from "@/configs/app.config";
+import { Link } from "react-router-dom";
 
 export const AppSidebar = (_props: IAppSidebarProps) => {
   return (
-    <Sidebar>
+    <Sidebar variant="sidebar">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>{app_config.name}</SidebarGroupLabel>
@@ -22,10 +23,10 @@ export const AppSidebar = (_props: IAppSidebarProps) => {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link to={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

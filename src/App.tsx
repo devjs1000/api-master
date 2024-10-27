@@ -1,13 +1,11 @@
-import { AppSidebar } from "@/components/core";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { use_process_store } from "./state";
+import { RouterProvider } from "react-router-dom";
+import router from "@/pages";
 
 const App = () => {
-  const { sidebar } = use_process_store();
   return (
-    <SidebarProvider open={sidebar.open}>
-      <AppSidebar />
-    </SidebarProvider>
+    <>
+      <RouterProvider router={router} />
+    </>
   );
 };
 
