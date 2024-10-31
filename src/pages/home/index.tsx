@@ -1,6 +1,13 @@
+import { Projects } from "@/components/core/projects";
+import { Container } from "@/components/custom";
 
 export const Home = (_props: IHomeProps) => {
-  return <div>Home</div>;
+  return (
+    <Container className="w-full">
+      
+      <Projects />
+    </Container>
+  );
 };
 
 interface IHomeProps {}

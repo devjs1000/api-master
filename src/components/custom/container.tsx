@@ -6,12 +6,17 @@ export const Container = ({
   className,
   all_center,
   children,
+  reset_ui = false,
   ...rest
 }: IContainerProps) => {
   return (
     <div
       {...rest}
-      className={cn("p-4", all_center && class_config.all_center, className)}
+      className={cn(
+        reset_ui ? "" : "p-4",
+        all_center && class_config.all_center,
+        className
+      )}
     >
       {children}
     </div>
@@ -20,4 +25,5 @@ export const Container = ({
 
 interface IContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   all_center?: boolean;
+  reset_ui?: boolean;
 }

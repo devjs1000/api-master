@@ -13,4 +13,5 @@ export const LayoutPage = (_props: ILayoutPageProps) => {
   );
 };
 
-interface ILayoutPageProps {}
+interface ILayoutPageProps {
+}
