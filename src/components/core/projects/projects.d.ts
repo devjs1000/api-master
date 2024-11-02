@@ -4,6 +4,8 @@ interface Project {
   description: string;
   tags: string[];
   created_at: Date;
+  updated_at: Date;
+  children: (ApiFolder | ApiFile)[] | null;
 }
 
 interface ApiFolder {

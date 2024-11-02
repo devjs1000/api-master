@@ -6,7 +6,7 @@ const inital_process_state: ProcessStoreGet = {
   },
 };
 
-export const use_process_store = create<ProcessStore>((set, get) => {
+export const use_process_store = create<ProcessStore>((set, _get) => {
   return {
     ...inital_process_state,
     set_sidebar: (open: boolean) => {

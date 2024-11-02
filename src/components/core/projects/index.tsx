@@ -4,6 +4,9 @@ import { CreateNewCard } from "@/components/custom-shad";
 import { Container } from "@/components/custom";
 import { CustomModal } from "@/components/custom-shad/custom-modal";
 import { use_disclosure } from "@/hooks/use-disclosure";
+import { QuickForm } from "../quick-form";
+import use_form from "@/hooks/use-form";
+import { use_project_store } from "@/state/project.state";
 
 export const Projects = (_props: IProjectsProps) => {
   const columns = create_columns({
@@ -20,6 +23,25 @@ export const Projects = (_props: IProjectsProps) => {
   });
 
   const disclosure = use_disclosure(false);
+  const { projects, add_project } = use_project_store();
+  const form = use_form({
+    initial_value: {
+      project_name: "",
+      project_description: "",
+      project_tags: [],
+    },
+    async on_submit(values) {
+      add_project({
+        name: values.project_name,
+        description: values.project_description,
+        tags: values.project_tags,
+        id: Math.random().toString(36).substr(2, 9),
+        created_at: new Date(),
+        updated_at: new Date(),
+        children: [],
+      });
+    },
+  });
 
   return (
     <Container reset_ui className="flex flex-wrap gap-2">
@@ -32,8 +54,9 @@ export const Projects = (_props: IProjectsProps) => {
         footer_buttons={[
           {
             title: "Create",
-            on_click() {
-              disclosure.on_close()
+            async on_click() {
+              await form.handle_submit();
+              disclosure.on_close();
             },
             variant: "default",
           },
@@ -47,20 +70,54 @@ export const Projects = (_props: IProjectsProps) => {
         ]}
         disclosure={disclosure}
       >
-        <div>Form</div>
+        <QuickForm<typeof form.values>
+          form={form}
+          defination={{
+            name: "create_project",
+            description: "Create a new project",
+            tags: ["create", "project"],
+            children: [
+              {
+                core_type: "layout",
+                id: "project_layout",
+                title: "Project Details",
+                description: "Fill the details of the project",
+                hide: {
+                  title: true,
+                  description: true,
+                },
+                children: [
+                  {
+                    core_type: "input",
+                    id: "project_name",
+                    type: "text",
+                    label: "Name",
+                    placeholder: "Enter the project name",
+                    required: true,
+                  },
+                  {
+                    core_type: "input",
+                    id: "project_description",
+                    type: "textarea",
+                    label: "Description",
+                    placeholder: "Enter the project description",
+                    required: true,
+                  },
+                  {
+                    core_type: "input",
+                    id: "project_tags",
+                    type: "tag",
+                    label: "Project Tags",
+                    placeholder: "Enter the project tags",
+                    required: false,
+                  },
+                ],
+              },
+            ],
+          }}
+        />
       </CustomModal>
-      <DataTable
-        columns={columns}
-        data={[
-          {
-            name: "Test Project",
-            description: "Test Description",
-            tags: ["test", "new"],
-            created_at: new Date(),
-            id: "test",
-          },
-        ]}
-      />
+      <DataTable columns={columns} data={projects} />
     </Container>
   );
 };

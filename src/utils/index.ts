@@ -1,1 +1,1 @@
-export * from "@/utils/tailwind.utils";
+export * from "@/utils/project.utils";

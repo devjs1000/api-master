@@ -1,17 +1,17 @@
-import { CSSProperties } from "react";
+import { CSSProperties, forwardRef } from "react";
 import { Card } from "@/components/ui/card";
 import { LucidePlus } from "lucide-react";
 import { CustomTooltip } from "./custom-tooltip";
 import { cn } from "@/lib/utils";
 
-export const CreateNewCard = ({
+export const CreateNewCard = forwardRef(({
   tooltip,
   w,
   h,
   on_click,
   className,
   ...rest
-}: ICreateNewCardProps) => {
+}: ICreateNewCardProps, ref:any) => {
   return (
     <CustomTooltip content={tooltip || "Create New"}>
       <Card
@@ -25,12 +25,13 @@ export const CreateNewCard = ({
         )}
         onClick={on_click}
         {...rest}
+        ref={ref}
       >
         <LucidePlus />
       </Card>
     </CustomTooltip>
   );
-};
+});
 
 interface ICreateNewCardProps extends React.HTMLAttributes<HTMLDivElement> {
   w: CSSProperties["width"];

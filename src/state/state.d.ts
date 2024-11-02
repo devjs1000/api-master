@@ -24,3 +24,26 @@ interface ProcessStoreSet {
 }
 
 type ProcessStore = ProcessStoreGet & ProcessStoreSet;
+
+// {
+//   name: "Test Project",
+//   description: "Test Description",
+//   tags: ["test", "new"],
+//   created_at: new Date(),
+//   id: "test",
+// },
+
+interface ProjectStoreGet {
+  projects: Project[];
+  current_project: Project | null;
+  current_project_id: string | null;
+}
+
+interface ProjectStoreSet {
+  add_project: (project: Project) => void;
+  open_project: (id: string) => string;
+  update_project: (id: string, project: Project) => void;
+  remove_project: (id: string) => void;
+}
+
+type ProjectStore = ProjectStoreGet & ProjectStoreSet;
