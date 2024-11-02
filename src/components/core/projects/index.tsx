@@ -7,23 +7,33 @@ import { use_disclosure } from "@/hooks/use-disclosure";
 import { QuickForm } from "../quick-form";
 import use_form from "@/hooks/use-form";
 import { use_project_store } from "@/state/project.state";
+import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
 
 export const Projects = (_props: IProjectsProps) => {
-  const columns = create_columns({
-    on_copy(project_id) {
-      console.log(project_id);
-      navigator.clipboard.writeText(project_id);
-    },
-    on_delete(project_id) {
-      console.log(project_id);
-    },
-    on_open(project_id) {
-      console.log(project_id);
-    },
-  });
+  const { projects, add_project, open_project, remove_project } =
+    use_project_store();
+  const navigate = useNavigate();
+
+  const columns = useMemo(() => {
+    const custom_columns = create_columns({
+      on_copy(project_id) {
+        navigator.clipboard.writeText(project_id);
+      },
+      on_delete(project_id) {
+        remove_project(project_id);
+      },
+      on_open(project_id) {
+        const status = open_project(project_id);
+        if (status) {
+          navigate(`/project/${project_id}`);
+        }
+      },
+    });
+    return custom_columns;
+  }, []);
 
   const disclosure = use_disclosure(false);
-  const { projects, add_project } = use_project_store();
   const form = use_form({
     initial_value: {
       project_name: "",

@@ -1,10 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import {
-  CopyIcon,
-  LinkIcon,
-  MoreHorizontal,
-  TrashIcon,
-} from "lucide-react";
+import { CopyIcon, LinkIcon, MoreHorizontal, TrashIcon } from "lucide-react";
 import { formatDistance } from "date-fns";
 import { Button } from "@/components/ui/button";
 import {
@@ -51,6 +46,14 @@ export const create_columns = (params: CreateColumnsParams) => {
     {
       accessorKey: "created_at",
       header: "Created At",
+      cell: ({ getValue }) => {
+        const value = getValue() as Date;
+        return formatDistance(value, new Date(), { addSuffix: true });
+      },
+    },
+    {
+      accessorKey: "updated_at",
+      header: "Updated At",
       cell: ({ getValue }) => {
         const value = getValue() as Date;
         return formatDistance(value, new Date(), { addSuffix: true });

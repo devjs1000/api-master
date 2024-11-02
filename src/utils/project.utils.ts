@@ -9,7 +9,7 @@ export const local_get_project = (id: string) => {
 };
 export const local_add_project = (project: Project) => {
   const projects_list = local_projects();
-  projects_list.push(project);
+  projects_list.unshift(project);
   localStorage.setItem(projects_key, JSON.stringify(projects_list));
 };
 export const local_update_project = (id: string, project: Partial<Project>) => {
@@ -18,8 +18,8 @@ export const local_update_project = (id: string, project: Partial<Project>) => {
     (project: Project) => project.id === id
   );
   projects_list[project_index] = {
-    ...projects_list[project_index],
     ...project,
+    ...projects_list[project_index],
   };
   localStorage.setItem(projects_key, JSON.stringify(projects_list));
 };
