@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import { LayoutPage } from "@/pages/layout";
 import { ErrorInfo } from "@/pages/(info)/error-info";
 import { Home } from "./home";
+import Project from "./project";
+import { CorruptURL } from "./(info)/corrupt-url-info";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +15,16 @@ const router = createBrowserRouter([
         path: "/",
         Component: Home,
       },
+
+      {
+        path: "/project/:id",
+        Component: Project,
+      },
     ],
+  },
+  {
+    path: "/project",
+    element: <CorruptURL url="/project" missing_params={["id"]} />,
   },
 ]);
 

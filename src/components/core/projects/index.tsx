@@ -9,22 +9,30 @@ import use_form from "@/hooks/use-form";
 import { use_project_store } from "@/state/project.state";
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
+import { toast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 export const Projects = (_props: IProjectsProps) => {
-  const { projects, add_project, open_project, remove_project } =
-    use_project_store();
+  const project = use_project_store();
   const navigate = useNavigate();
-
+  const disclosure = use_disclosure(false);
   const columns = useMemo(() => {
     const custom_columns = create_columns({
       on_copy(project_id) {
         navigator.clipboard.writeText(project_id);
+        toast?.({
+          title: "Copied",
+          description: "Project ID copied to clipboard",
+          variant: "default",
+          action: <ToastAction altText="Close">Ok</ToastAction>,
+          duration: 2000,
+        });
       },
       on_delete(project_id) {
-        remove_project(project_id);
+        project?.remove_project(project_id);
       },
       on_open(project_id) {
-        const status = open_project(project_id);
+        const status = project?.open_project(project_id);
         if (status) {
           navigate(`/project/${project_id}`);
         }
@@ -33,7 +41,6 @@ export const Projects = (_props: IProjectsProps) => {
     return custom_columns;
   }, []);
 
-  const disclosure = use_disclosure(false);
   const form = use_form({
     initial_value: {
       project_name: "",
@@ -41,7 +48,7 @@ export const Projects = (_props: IProjectsProps) => {
       project_tags: [],
     },
     async on_submit(values) {
-      add_project({
+      project?.add_project({
         name: values.project_name,
         description: values.project_description,
         tags: values.project_tags,
@@ -127,7 +134,7 @@ export const Projects = (_props: IProjectsProps) => {
           }}
         />
       </CustomModal>
-      <DataTable columns={columns} data={projects} />
+      <DataTable columns={columns} data={project?.projects} />
     </Container>
   );
 };
