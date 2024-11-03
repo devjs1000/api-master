@@ -1,7 +1,7 @@
 import { Container } from "@/components/custom";
 import {} from "react";
 
-const Project = (props: IProjectProps) => {
+const Project = (_props: IProjectProps) => {
   return <Container>
     project
   </Container>

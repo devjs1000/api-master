@@ -18,8 +18,8 @@ export const local_update_project = (id: string, project: Partial<Project>) => {
     (project: Project) => project.id === id
   );
   projects_list[project_index] = {
-    ...project,
     ...projects_list[project_index],
+    ...project,
   };
   localStorage.setItem(projects_key, JSON.stringify(projects_list));
 };

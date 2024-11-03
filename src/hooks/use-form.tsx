@@ -62,6 +62,10 @@ function use_form<T>({
     error: errors[key],
   });
 
+  const handle_reset = () => {
+    set_values(initial_value);
+    set_errors({} as any);
+  };
   return {
     extract_values,
     values,
@@ -71,6 +75,7 @@ function use_form<T>({
     errors,
     set_errors,
     update_value,
+    handle_reset,
   };
 }
 

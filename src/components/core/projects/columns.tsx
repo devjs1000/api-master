@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { CopyIcon, LinkIcon, MoreHorizontal, TrashIcon } from "lucide-react";
+import { CopyIcon, EditIcon, LinkIcon, MoreHorizontal, TrashIcon } from "lucide-react";
 import { formatDistance } from "date-fns";
 import { Button } from "@/components/ui/button";
 import {
@@ -82,6 +82,10 @@ export const create_columns = (params: CreateColumnsParams) => {
                 <LinkIcon />
                 <TextWrap>Open project</TextWrap>
               </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => params.on_edit(project.id)}>
+                <EditIcon />
+                <TextWrap>Edit Project</TextWrap>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 color="red"
@@ -103,4 +107,5 @@ interface CreateColumnsParams {
   on_delete: (project_id: string) => void;
   on_copy: (project_id: string) => void;
   on_open: (project_id: string) => void;
+  on_edit: (project_id: string) => void;
 }
