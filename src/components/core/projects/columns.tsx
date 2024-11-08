@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { TextWrap } from "@/components/custom";
+import { CustomDropdown } from "@/components/custom-shad";
 
 export const create_columns = (params: CreateColumnsParams) => {
   const columns: ColumnDef<Project>[] = [
@@ -70,38 +71,37 @@ export const create_columns = (params: CreateColumnsParams) => {
       cell: ({ row }) => {
         const project = row.original;
         return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => params.on_copy(project.id)}>
-                <CopyIcon />
-                <TextWrap>Copy project ID</TextWrap>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => params.on_open(project.id)}>
-                <LinkIcon />
-                <TextWrap>Open project</TextWrap>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => params.on_edit(project.id)}>
-                <EditIcon />
-                <TextWrap>Edit Project</TextWrap>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                color="red"
-                onClick={() => params.on_delete(project.id)}
-              >
-                <TrashIcon />
-                <TextWrap>Delete</TextWrap>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <CustomDropdown
+            items={[
+              {
+                name: "copy",
+                label: "Copy project ID",
+                Icon: CopyIcon,
+                on_click: () => params.on_copy(project.id),
+              },
+              {
+                name: "open",
+                label: "Open project",
+                Icon: LinkIcon,
+                on_click: () => params.on_open(project.id),
+              },
+              {
+                name: "edit",
+                label: "Edit Project",
+                Icon: EditIcon,
+                on_click: () => params.on_edit(project.id),
+              },
+              {
+                name: "delete",
+                label: "Delete",
+                Icon: TrashIcon,
+                on_click: () => params.on_delete(project.id),
+              },
+            ]}
+            menu={{ label: "Actions" }}
+          >
+            <MoreHorizontal className="h-4 w-4" />
+          </CustomDropdown>
         );
       },
     },

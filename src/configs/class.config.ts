@@ -1,3 +1,13 @@
 export const class_config = {
   all_center: "flex items-center justify-center",
+  ellipsis: "truncate",
+  h1: "text-3xl font-bold",
+  h2: "text-2xl font-bold",
+  h3: "text-xl font-semibold",
+  h4: "text-lg font-semibold",
+  h5: "text-base font-semibold",
+  p1: "text-lg text-muted-foreground",
+  p2: "text-base text-muted-foreground",
+  p3: "text-sm text-muted-foreground",
+  p4: "text-xs text-muted-foreground",
 };
