@@ -27,7 +27,16 @@ export const CustomDropdown = (props: ICustomDropdownProps) => {
         )}
         {props?.items?.map((item, index) => {
           const is_react_node = React.isValidElement(item);
-          if (is_react_node) return item;
+          if (is_react_node) {
+            return (
+              <DropdownMenuItem key={index}>
+                {item}
+              </DropdownMenuItem>
+            );
+          }
+          if(typeof item === "string") {
+            return <DropdownElement key={index} type={item as DropdownElementType} />;
+          }
           const {
             name,
             label,
@@ -58,7 +67,7 @@ export const CustomDropdown = (props: ICustomDropdownProps) => {
 };
 
 interface ICustomDropdownProps {
-  items: (DropdownItem | React.ReactNode)[];
+  items: (DropdownItem | React.ReactNode & DropdownElementType)[];
   menu: {
     label: string;
     hide?: boolean;
@@ -74,3 +83,15 @@ interface DropdownItem {
   Icon: React.FC;
   on_click: () => void;
 }
+
+type DropdownElementType = "separator" | "br";
+const DropdownElement: React.FC<{ type: DropdownElementType }> = ({ type }) => {
+  switch (type) {
+    case "br":
+      return <br />;
+    case "separator":
+      return <DropdownMenuSeparator />;
+    default:
+      return null;
+  }
+};

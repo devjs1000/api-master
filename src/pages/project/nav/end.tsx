@@ -9,17 +9,17 @@ export const EndNav = (_props: IEndNavProps) => {
       <CustomDropdown
         items={[
           {
-            name: 'save',
-            label: 'Save',
+            name: "save",
+            label: "Save",
             Icon: SaveIcon,
             on_click: () => {},
-          }
+          },
         ]}
         menu={{
           label: "Menu",
         }}
       >
-        <MenuIcon size={24}  />
+        <MenuIcon size={24} />
       </CustomDropdown>
     </Box>
   );
