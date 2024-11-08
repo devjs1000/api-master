@@ -91,18 +91,22 @@ export const Projects = (_props: IProjectsProps) => {
           <CreateNewCard
             w="200px"
             h="100px"
-            tooltip="Create New Project"
+            tooltip={project_id ? "Update Project" : "Create New Project"}
             onClick={() => {
               set_project_id(null);
               form?.handle_reset();
             }}
           />
         }
-        title="Create New Project"
-        description="Create a new project by filling the form below."
+        title={project_id ? "Update Project" : "Create New Project"}
+        description={
+          project_id
+            ? "Update the project details"
+            : "Fill the details of the project"
+        }
         footer_buttons={[
           {
-            title: "Create",
+            title: project_id ? "Update" : "Create",
             async on_click() {
               await form.handle_submit();
               disclosure.on_close();

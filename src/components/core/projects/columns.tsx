@@ -1,5 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { CopyIcon, EditIcon, LinkIcon, MoreHorizontal, TrashIcon } from "lucide-react";
+import {
+  CopyIcon,
+  EditIcon,
+  LinkIcon,
+  MoreHorizontal,
+  TrashIcon,
+} from "lucide-react";
 import { formatDistance } from "date-fns";
 import { Button } from "@/components/ui/button";
 import {
