@@ -2,7 +2,7 @@ interface FormBaseInput {
   id: string;
   core_type: "input";
   type: FormInputType;
-  label: string;
+  label?: string;
   placeholder?: string; //default is empty
   required?: boolean; //default is false
   default_value?: any; //default is empty
@@ -10,6 +10,8 @@ interface FormBaseInput {
     class_name?: string;
     style?: React.CSSProperties;
   };
+  props?: any;
+  children?: React.ReactNode;
 }
 
 interface FormBaseLayout {
@@ -41,5 +43,5 @@ interface FormCore {
   children: (FormBaseLayout | FormBaseInput)[];
 }
 
-type FormInputType = "text" | "textarea" | "tag" | "submit";
+type FormInputType = "text" | "textarea" | "tag" | "button";
 type FormLayoutType = "horizontal" | "vertical";

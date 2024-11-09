@@ -15,7 +15,12 @@ export const CustomModal = (props: CustomModalProps) => {
     <Dialog
       open={props?.disclosure?.open}
       onOpenChange={(open) => {
-        props?.disclosure?.set_open(open);
+        console.log("open", open);
+        if (open) {
+          props?.disclosure?.on_open?.();
+        } else {
+          props?.disclosure?.on_close?.();
+        }
       }}
     >
       <DialogTrigger asChild>
@@ -67,7 +72,7 @@ interface CustomModalProps {
   footer_buttons?: FooterButton[];
   title: string;
   description?: string;
-  trigger: React.ReactNode;
+  trigger?: React.ReactNode;
   children: React.ReactNode;
-  disclosure?: DisclosureReturnType;
+  disclosure?: Partial<DisclosureReturnType>;
 }

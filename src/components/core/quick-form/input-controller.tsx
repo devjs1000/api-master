@@ -4,6 +4,7 @@ import { Textarea } from "../../ui/textarea";
 import { Container } from "@/components/custom";
 import { cn } from "@/lib/utils";
 import { TagInput } from "@/components/custom/tag-input";
+import { Button } from "@/components/ui/button";
 
 export const InputController: React.FC<IInputControllerProps> = (props) => {
   return (
@@ -21,7 +22,7 @@ export const InputController: React.FC<IInputControllerProps> = (props) => {
           id={props?.id}
           placeholder={props?.placeholder}
           value={props?.value}
-          onChange={(e)=>props?.onChange?.(e.target.value)}
+          onChange={(e) => props?.onChange?.(e.target.value)}
         />
       )}
       {props?.type === "textarea" && (
@@ -29,7 +30,7 @@ export const InputController: React.FC<IInputControllerProps> = (props) => {
           id={props?.id}
           placeholder={props?.placeholder}
           value={props?.value}
-          onChange={(e)=>props?.onChange?.(e.target.value)}
+          onChange={(e) => props?.onChange?.(e.target.value)}
         />
       )}
       {props?.type === "tag" && (
@@ -40,6 +41,15 @@ export const InputController: React.FC<IInputControllerProps> = (props) => {
           value={props?.value || []}
           onChange={props?.onChange}
         />
+      )}
+      {props?.type === "button" && (
+        <Button
+          {...props?.props}
+          variant={props?.props?.variant || "default"}
+          onClick={props?.props?.onClick}
+        >
+          {props?.children}
+        </Button>
       )}
     </Container>
   );

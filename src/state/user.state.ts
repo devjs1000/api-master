@@ -6,7 +6,7 @@ const inital_user_state: UserStoreGet = {
   },
 };
 
-export const use_user_store = create<UserStore>((set, get) => {
+export const use_user_store = create<UserStore>((set, _get) => {
   return {
     ...inital_user_state,
     set_user: (user: UserType) => {

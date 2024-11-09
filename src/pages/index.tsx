@@ -15,12 +15,11 @@ const router = createBrowserRouter([
         path: "/",
         Component: Home,
       },
-
-      {
-        path: "/project/:id",
-        Component: Project,
-      },
     ],
+  },
+  {
+    path: "/project/:id",
+    Component: Project,
   },
   {
     path: "/project",
