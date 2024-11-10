@@ -9,7 +9,7 @@ export const StartNav = (_props: IStartNavProps) => {
   return (
     <Box reset_ui className="flex justify-start">
       <Button onClick={go_back} variant={"ghost"} >
-        <ArrowLeftIcon size={24} />
+        <ArrowLeftIcon size={28} />
       </Button>
     </Box>
   );

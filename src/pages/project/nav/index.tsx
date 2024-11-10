@@ -6,7 +6,7 @@ import { Box } from "@/components/custom";
 
 const ProjectNav = (_props: IProjectNavProps) => {
   return (
-    <Box className="border-b flex items-center">
+    <Box reset_ui className="flex items-center w-full gap-4">
       <StartNav />
       <CenterNav />
       <EndNav />

@@ -55,7 +55,7 @@ export const CustomDropdown = (props: ICustomDropdownProps) => {
               }}
             >
               <Icon />
-              <TextWrap id={name} {...label_props}>
+              <TextWrap id={name} type="p3" {...label_props}>
                 {label}
               </TextWrap>
             </DropdownMenuItem>

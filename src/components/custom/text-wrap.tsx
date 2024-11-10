@@ -7,12 +7,17 @@ export const TextWrap = ({
   children,
   ellipsis = false,
   type="p2",
+  style={},
   ...rest
 }: ITextWrapProps) => {
   return (
     <span
       {...rest}
       className={cn(className, ellipsis && class_config.ellipsis, class_config[type])}
+      style={{
+        fontFamily: '"Inter", sans-serif',
+        ...style,
+      }}
     >
       {children}
     </span>

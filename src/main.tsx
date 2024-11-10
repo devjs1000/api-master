@@ -7,7 +7,7 @@ import Forms from "@/components/forms";
 const root_el = document.getElementById("root") as HTMLElement;
 const root = createRoot(root_el);
 
-window.onbeforeunload = () => "Are you sure you want to leave?";
+// window.onbeforeunload = () => "Are you sure you want to leave?";
 
 root.render(
   <StrictMode>
