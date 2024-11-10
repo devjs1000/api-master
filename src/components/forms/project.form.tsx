@@ -1,14 +1,13 @@
 import {} from "react";
 import { QuickForm } from "../core/quick-form";
 import use_form from "@/hooks/use-form";
-import { local_get_project } from "@/utils";
 import { use_project_store } from "@/state/project.state";
 import { use_form_global_state } from "@/state/form.state";
 
 const ProjectForm = (_props: IProjectFormProps) => {
   const { form, close_form } = use_form_global_state();
   const { add_project, update_project } = use_project_store();
-  const project_id = form?._id;
+  const project_id = form?.id;
   const form_hook = use_form({
     initial_value: {
       project_name: form?.name || "",
@@ -17,24 +16,16 @@ const ProjectForm = (_props: IProjectFormProps) => {
     },
     async on_submit(values) {
       if (project_id) {
-        console.log("project_id", project_id);
-        const stored_project = local_get_project(project_id);
         update_project(project_id, {
-          ...stored_project,
           name: values.project_name,
           description: values.project_description,
           tags: values.project_tags,
-          updated_at: new Date(),
         });
       } else {
         add_project({
           name: values.project_name,
           description: values.project_description,
           tags: values.project_tags,
-          id: Math.random().toString(36).substr(2, 9),
-          created_at: new Date(),
-          updated_at: new Date(),
-          children: [],
         });
       }
       close_form();

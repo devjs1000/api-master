@@ -46,7 +46,7 @@ export const Projects = (_props: IProjectsProps) => {
         open_form(
           "project",
           {
-            _id: curr_project_id,
+            id: curr_project_id,
             name: stored_project.name,
             description: stored_project.description,
             tags: stored_project.tags,

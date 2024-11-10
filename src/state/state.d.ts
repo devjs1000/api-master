@@ -32,9 +32,9 @@ interface ProjectStoreGet {
 }
 
 interface ProjectStoreSet {
-  add_project: (project: Project) => void;
+  add_project: (project: ProjectAdd) => void;
   open_project: (id: string) => string;
-  update_project: (id: string, project: Project) => void;
+  update_project: (id: string, project: ProjectUpdate) => void;
   remove_project: (id: string) => void;
 }
 
@@ -42,7 +42,7 @@ type ProjectStore = ProjectStoreGet & ProjectStoreSet;
 
 interface FormInput {
   project: {
-    _id?: string;
+    id?: string;
     name: string;
     description: string;
     tags: string[];

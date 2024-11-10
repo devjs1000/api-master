@@ -8,6 +8,20 @@ interface Project {
   children: (ApiFolder | ApiFile)[] | null;
 }
 
+interface ProjectAdd {
+  name: string;
+  description: string;
+  tags: string[];
+}
+
+interface ProjectUpdate {
+  name: string;
+  description: string;
+  tags: string[];
+}
+
+
+
 interface ApiFolder {
   id: string;
   type: "folder";

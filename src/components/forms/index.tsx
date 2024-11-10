@@ -5,7 +5,6 @@ import ProjectForm from "./project.form";
 
 const Forms = (_props: IFormsProps) => {
   const { form_name, modal_input, close_form } = use_form_global_state();
-  console.log("form_name", form_name);
   return (
     form_name && (
       <CustomModal
