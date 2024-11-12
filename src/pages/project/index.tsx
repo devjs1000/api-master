@@ -14,8 +14,8 @@ const Project = (_props: IProjectProps) => {
     <SidebarProvider open={sidebar.open}>
       <ProjectSidebar />
       <Container reset_ui className="w-full">
-        <Box className="flex border-b items-center"  >
-          <SidebarTrigger onClick={toggle_sidebar}    />
+        <Box className="flex border-b items-center">
+          <SidebarTrigger onClick={toggle_sidebar} />
           <Separator orientation="vertical" className="h-5 mx-4" />
           <ProjectNav />
         </Box>

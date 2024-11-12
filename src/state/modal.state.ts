@@ -13,3 +13,4 @@ export const useModalGlobalState = create<ModalState>((set) => ({
   close_modal: () =>
     set((state) => ({ ...state, modal_name: null, modal: null })),
 }));
+
