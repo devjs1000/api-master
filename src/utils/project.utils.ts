@@ -205,43 +205,39 @@ export const remove_element_by_path = (
 export const add_element_by_path = (
   elements: FileAndFoldersType | FileAndFoldersType[],
   element: FileAndFoldersType,
-  level: number = 0
-): FileAndFoldersType[] | null => {
+  path: Path = "",
+): FileAndFoldersType[] | undefined => {
   const is_array = Array.isArray(elements);
-  const level_id = get_hierarchy_id_by_level(level);
-  if (level_id === "" && is_array) {
+  if (path === "" && is_array) {
     elements.push(element);
     return elements;
   }
-  if (!is_array) {
-    return null;
-  } else {
-    for (let i = 0; i < elements.length; i++) {
-      const element_id = update_hierarchy_id_by_index(level_id, i);
-      const element_item = elements[i];
-      if (element_id === level_id) {
-        elements.push(element);
+  if (!is_array) return;
+  for (let i = 0; i < elements.length; i++) {
+    const element_id = update_hierarchy_id_by_index(path, i);
+    const current_element = elements[i];
+    if (element_id === path) {
+      if (current_element.type !== "folder") return;
+      current_element.children.push(element);
+      return elements;
+    }
+    if (current_element.type == "folder" && current_element.children.length) {
+      const children = current_element.children;
+      const updated_children = add_element_by_path(
+        children,
+        element,
+        path,
+      );
+      if (updated_children) {
+        elements[i] = {
+          ...current_element,
+          children: updated_children,
+        };
         return elements;
-      }
-      if (element_item.type == "folder" && element_item.children.length) {
-        const children = element_item.children;
-        const updated_children = add_element_by_path(
-          children,
-          element,
-          level + 1
-        );
-        if (updated_children) {
-          elements[i] = {
-            ...element_item,
-            //@ts-ignore
-            children: updated_children,
-          };
-          return elements;
-        }
       }
     }
   }
-  return null;
+  return;
 };
 
 export const create_folder = ({ path, ...rest }: FolderAdd): ApiFolder => {
@@ -268,4 +264,3 @@ export const create_file = ({ path, ...rest }: FileAdd): ApiFile => {
     updated_at: new Date(),
   };
 };
-

@@ -44,13 +44,15 @@ export const use_project_store = create<ProjectStore>((set, get) => {
       });
     },
     add_folder: (params) => {
+      console.log(params);
       const current_project = get().current_project;
       const current_project_children = current_project?.children;
       if (!current_project_children) return;
       const folder = create_folder(params);
       const updated_children = add_element_by_path(
         current_project_children,
-        folder
+        folder,
+        params.path
       );
       if (updated_children) {
         const updated_project = {
@@ -73,7 +75,8 @@ export const use_project_store = create<ProjectStore>((set, get) => {
       const file = create_file(params);
       const updated_children = add_element_by_path(
         current_project_children,
-        file
+        file,
+        params.path
       );
       if (updated_children) {
         const updated_project = {
