@@ -1,5 +1,5 @@
 import {} from "react";
-import { FileAndFolder, FileAndFoldersType } from "./file-and-folder";
+import { FileAndFolder } from "./file-and-folder";
 
 export const FileAndFolderContext = ({
   elements,

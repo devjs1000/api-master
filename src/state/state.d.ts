@@ -36,6 +36,8 @@ interface ProjectStoreSet {
   open_project: (id: string) => string;
   update_project: (id: string, project: ProjectUpdate) => void;
   remove_project: (id: string) => void;
+  add_folder: (folder: FolderAdd) => void;
+  add_file: (file: FileAdd) => void;
 }
 
 type ProjectStore = ProjectStoreGet & ProjectStoreSet;
@@ -46,6 +48,16 @@ interface FormInput {
     name: string;
     description: string;
     tags: string[];
+  };
+  folder: {
+    id?: string;
+    name: string;
+    path: string;
+  };
+  file: {
+    id?: string;
+    name: string;
+    path: string;
   };
 }
 interface FormStateGetter {

@@ -5,6 +5,7 @@ import { Container } from "@/components/custom";
 import { cn } from "@/lib/utils";
 import { TagInput } from "@/components/custom/tag-input";
 import { Button } from "@/components/ui/button";
+import { SelectInput } from "@/components/custom/select-input";
 
 export const InputController: React.FC<IInputControllerProps> = (props) => {
   return (
@@ -50,6 +51,16 @@ export const InputController: React.FC<IInputControllerProps> = (props) => {
         >
           {props?.children}
         </Button>
+      )}
+      {props?.type === "select" && (
+        <SelectInput
+          id={props?.id}
+          default_value={props?.default_value || []}
+          placeholder={props?.placeholder}
+          value={props?.value || []}
+          onChange={props?.onChange}
+          data={props?.props?.data || []}
+        />
       )}
     </Container>
   );

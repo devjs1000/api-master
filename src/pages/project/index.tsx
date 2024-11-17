@@ -8,8 +8,9 @@ import { use_process_store } from "@/state";
 import { Separator } from "@/components/ui/separator";
 
 const Project = (_props: IProjectProps) => {
-  const {} = use_project_store();
+  const {current_project} = use_project_store();
   const { sidebar, toggle_sidebar } = use_process_store();
+  console.log(current_project?.children);
   return (
     <SidebarProvider open={sidebar.open}>
       <ProjectSidebar />

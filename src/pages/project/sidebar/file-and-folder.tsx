@@ -68,11 +68,12 @@ export const FileAndFolder = ({
           <SidebarMenuButton>
             <Icon />
             <TextWrap type="p4">
-              {element.name} {has_children && `(${element.children.length})`}
+              {element.name}{" "}
+              {has_children ? `(${element.children.length})` : ""}
             </TextWrap>
           </SidebarMenuButton>
         </CollapsibleTrigger>
-        {has_children && (
+        {has_children ? (
           <CollapsibleContent>
             <SidebarMenuSub>
               <SidebarMenuSubItem>
@@ -86,13 +87,12 @@ export const FileAndFolder = ({
               </SidebarMenuSubItem>
             </SidebarMenuSub>
           </CollapsibleContent>
-        )}
+        ) : null}
       </SidebarMenuItem>
     </Collapsible>
   );
 };
 
-export type FileAndFoldersType = ApiFolder | ApiFile;
 export interface FileAndFoldersProps {
   element: FileAndFoldersType;
   sibling_index?: number;

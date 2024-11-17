@@ -7,17 +7,7 @@ import {
   TrashIcon,
 } from "lucide-react";
 import { formatDistance } from "date-fns";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { TextWrap } from "@/components/custom";
 import { CustomDropdown } from "@/components/custom-shad";
 
 export const create_columns = (params: CreateColumnsParams) => {

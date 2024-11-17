@@ -9,16 +9,19 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { User2Icon, LogOutIcon, PlusIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { FileAndFoldersType } from "./file-and-folder";
 import { Actions, ProjectSidebarFooter } from "./footer";
 import { FileAndFolderContext } from "./file-and-folder-context";
+import { use_project_store } from "@/state/project.state";
+import { use_form_global_state } from "@/state/form.state";
 
 function ProjectSidebar() {
   const bottom_actions = useMemo(() => create_bottom_actions(), []);
-  const [file_and_folders] = useState(create_files_and_folders);
+  const { current_project } = use_project_store();
+  const file_and_folders = current_project?.children || [];
+  const { open_form } = use_form_global_state();
   return (
     <Sidebar variant="sidebar">
       <SidebarHeader>
@@ -30,10 +33,26 @@ function ProjectSidebar() {
       <SidebarContent>
         <SidebarMenu>
           <SidebarMenuItem className="flex items-center pt-2">
-            <SidebarMenuButton>
+            <SidebarMenuButton
+              onClick={() => {
+                open_form(
+                  "folder",
+                  { name: "Untitled", path: "" },
+                  { title: "Create Folder", description: "Create a new folder" }
+                );
+              }}
+            >
               <PlusIcon /> <TextWrap type="p4">Folder</TextWrap>
             </SidebarMenuButton>
-            <SidebarMenuButton>
+            <SidebarMenuButton
+              onClick={() => {
+                open_form(
+                  "file",
+                  { name: "Untitled", path: "" },
+                  { title: "Create File", description: "Create a new file" }
+                );
+              }}
+            >
               <PlusIcon /> <TextWrap type="p4">Api</TextWrap>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -71,179 +90,3 @@ const create_bottom_actions = (): Actions[] => {
     },
   ];
 };
-
-const create_files_and_folders = (): FileAndFoldersType[] => {
-  return [
-    {
-      id: "1",
-      type: "folder",
-      name: "Folder 1",
-      children: [
-        {
-          id: "1.1",
-          type: "file",
-          name: "File 1",
-          params: {},
-          responses: [],
-          version: "1.0.0",
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
-        {
-          //folder
-          id: "2",
-          type: "folder",
-          name: "Folder 2",
-          children: [
-            {
-              id: "1.1.1",
-              type: "file",
-              name: "File 2",
-              params: {},
-              responses: [],
-              version: "1.0.0",
-              created_at: new Date(),
-              updated_at: new Date(),
-            },
-          ],
-          version: "1.0.0",
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
-      ],
-      version: "1.0.0",
-      created_at: new Date(),
-      updated_at: new Date(),
-    },
-    {
-      id: "2",
-      type: "file",
-      name: "File 2",
-      params: {},
-      responses: [],
-      version: "1.0.0",
-      created_at: new Date(),
-      updated_at: new Date(),
-    },
-    {
-      id: "3",
-      type: "folder",
-      name: "Folder 2",
-      children: [
-        {
-          id: "1.2",
-          type: "file",
-          name: "File 3",
-          params: {},
-          responses: [],
-          version: "1.0.0",
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
-      ],
-      version: "1.0.0",
-      created_at: new Date(),
-      updated_at: new Date(),
-    },
-    {
-      id: "4",
-      type: "file",
-      name: "File 4",
-      params: {},
-      responses: [],
-      version: "1.0.0",
-      created_at: new Date(),
-      updated_at: new Date
-    },
-    {
-      id: "5",
-      type: "folder",
-      name: "Folder 5",
-      children: [
-        {
-          id: "1.3",
-          type: "file",
-          name: "File 5",
-          params: {},
-          responses: [],
-          version: "1.0.0",
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
-      ],
-      version: "1.0.0",
-      created_at: new Date(),
-      updated_at: new Date(),
-    },
-  {
-    id: "6",
-    type: "file",
-    name: "File 6",
-    params: {},
-    responses: [],
-    version: "1.0.0",
-    created_at: new Date(),
-    updated_at: new Date(),
-  },
-  {
-    id: "7",
-    type: "folder",
-    name: "Folder 7",
-    children: [
-      {
-        id: "1.4",
-        type: "file",
-        name: "File 7",
-        params: {},
-        responses: [],
-        version: "1.0.0",
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-    ],
-    version: "1.0.0",
-    created_at: new Date(),
-    updated_at: new Date(),
-  },
-  {
-    id: "8",
-    type: "file",
-    name: "File 8",
-    params: {},
-    responses: [],
-    version: "1.0.0",
-    created_at: new Date(),
-    updated_at: new Date(),
-  },
-  {
-    id: "9",
-    type: "folder",
-    name: "Folder 9",
-    children: [
-      {
-        id: "1.5",
-        type: "file",
-        name: "File 9",
-        params: {},
-        responses: [],
-        version: "1.0.0",
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-    ],
-    version: "1.0.0",
-    created_at: new Date(),
-    updated_at: new Date(),
-  },
-  {
-    id: "10",
-    type: "file",
-    name: "File 10",
-    params: {},
-    responses: [],
-    version: "1.0.0",
-    created_at: new Date(),
-    updated_at: new Date(),
-  }
-];
-}
