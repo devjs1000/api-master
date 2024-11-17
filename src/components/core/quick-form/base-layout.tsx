@@ -2,6 +2,7 @@ import { Box, TextWrap } from "@/components/custom";
 import { useId } from "react";
 import { BaseInput } from "./base-input";
 import { UseFormReturn } from "@/hooks/use-form";
+import { cn } from "@/lib/utils";
 
 export function BaseLayout<T>({ form, ...rest }: IBaseLayoutProps<T>) {
   const id = useId();
@@ -20,11 +21,16 @@ export function BaseLayout<T>({ form, ...rest }: IBaseLayoutProps<T>) {
           ...child_container_style,
           overflowY: rest.scrollable ? "auto" : "hidden",
         }}
-        className={rest?.child_container?.class_name}
+        className={cn(
+          rest?.child_container?.class_name,
+          rest.type == "horizontal" ? "flex gap-2" : "flex-col gap-2"
+        )}
       >
         {rest.children.map((child, index) => {
           if (child.core_type == "input") {
-            return <BaseInput<T> key={`${id}-${index}`} {...child} form={form} />;
+            return (
+              <BaseInput<T> key={`${id}-${index}`} {...child} form={form} />
+            );
           } else if (child.core_type == "layout") {
             return <BaseLayout key={`${id}-${index}`} {...child} form={form} />;
           } else {

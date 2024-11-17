@@ -26,6 +26,33 @@ export const InputController: React.FC<IInputControllerProps> = (props) => {
           onChange={(e) => props?.onChange?.(e.target.value)}
         />
       )}
+       {props?.type === "email" && (
+        <Input
+          type="email"
+          id={props?.id}
+          placeholder={props?.placeholder}
+          value={props?.value}
+          onChange={(e) => props?.onChange?.(e.target.value)}
+        />
+      )}
+        {props?.type === "number" && (
+        <Input
+          type="number"
+          id={props?.id}
+          placeholder={props?.placeholder}
+          value={props?.value}
+          onChange={(e) => props?.onChange?.(e.target.value)}
+        />
+      )}
+       {props?.type === "password" && (
+        <Input
+          type="password"
+          id={props?.id}
+          placeholder={props?.placeholder}
+          value={props?.value}
+          onChange={(e) => props?.onChange?.(e.target.value)}
+        />
+      )}
       {props?.type === "textarea" && (
         <Textarea
           id={props?.id}

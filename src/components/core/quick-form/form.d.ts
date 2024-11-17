@@ -43,5 +43,5 @@ interface FormCore {
   children: (FormBaseLayout | FormBaseInput)[];
 }
 
-type FormInputType = "text" | "textarea" | "tag" | "button" | "select"
+type FormInputType = "text" | "email" | "password" | "number" | "textarea" | "tag" | "button" | "select";
 type FormLayoutType = "horizontal" | "vertical";

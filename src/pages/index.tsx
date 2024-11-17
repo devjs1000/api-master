@@ -4,6 +4,7 @@ import { ErrorInfo } from "@/pages/(info)/error-info";
 import { Home } from "./home";
 import Project from "./project";
 import { CorruptURL } from "./(info)/corrupt-url-info";
+import Settings from "./settings";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
         path: "/",
         Component: Home,
       },
+      {
+        path:"/settings",
+        Component: Settings
+      }
     ],
   },
   {
