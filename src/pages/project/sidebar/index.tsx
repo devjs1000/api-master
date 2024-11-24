@@ -49,7 +49,7 @@ function ProjectSidebar() {
                 open_form(
                   "file",
                   { name: "Untitled", path: "" },
-                  { title: "Create File", description: "Create a new file" }
+                  { title: "Create API", description: "Create a new API" }
                 );
               }}
             >

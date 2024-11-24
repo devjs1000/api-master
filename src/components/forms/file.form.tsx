@@ -32,16 +32,16 @@ const FileForm = (_props: IProjectFormProps) => {
     <QuickForm<typeof form_hook.values>
       form={form_hook}
       defination={{
-        name: "Create File",
-        description: "Create a new file",
-        tags: ["create", "file"],
+        name: "Create API",
+        description: "Create a new API",
+        tags: ["create", "API"],
         children: [
           {
             core_type: "input",
             id: "name",
             type: "text",
             label: "Name",
-            placeholder: "Enter the file name",
+            placeholder: "Enter the API name",
             required: true,
           },
           {
@@ -84,7 +84,7 @@ const FileForm = (_props: IProjectFormProps) => {
                 id: "url",
                 type: "text",
                 label: "URL",
-                placeholder: "Enter the file url",
+                placeholder: "Enter the API url",
                 required: true,
               },
             ],
@@ -94,23 +94,23 @@ const FileForm = (_props: IProjectFormProps) => {
             id: "description",
             type: "textarea",
             label: "Description",
-            placeholder: "Enter the file description",
+            placeholder: "Enter the API description",
             required: true,
           },
           {
             core_type: "input",
             id: "tags",
             type: "tag",
-            label: "file Tags",
-            placeholder: "Enter the file tags",
+            label: "API Tags",
+            placeholder: "Enter the API tags",
             required: false,
           },
           {
             core_type: "layout",
             type: "horizontal",
-            id: "file_action",
+            id: "API_action",
             title: "Actions",
-            description: "Actions for the file",
+            description: "Actions for the API",
             hide: {
               title: true,
               description: true,
