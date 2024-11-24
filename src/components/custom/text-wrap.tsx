@@ -6,14 +6,18 @@ export const TextWrap = ({
   className,
   children,
   ellipsis = false,
-  type="p2",
-  style={},
+  type = "p2",
+  style = {},
   ...rest
 }: ITextWrapProps) => {
   return (
     <span
       {...rest}
-      className={cn(className, ellipsis && class_config.ellipsis, class_config[type])}
+      className={cn(
+        ellipsis && class_config.ellipsis,
+        class_config[type],
+        className
+      )}
       style={{
         fontFamily: '"Inter", sans-serif',
         ...style,

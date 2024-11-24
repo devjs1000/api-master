@@ -19,7 +19,7 @@ import { use_form_global_state } from "@/state/form.state";
 
 function ProjectSidebar() {
   const bottom_actions = useMemo(() => create_bottom_actions(), []);
-  const { current_project } = use_project_store();
+  const { current_project, selected_element } = use_project_store();
   const file_and_folders = current_project?.children || [];
   const { open_form } = use_form_global_state();
   return (
@@ -30,14 +30,18 @@ function ProjectSidebar() {
         </TextWrap>
       </SidebarHeader>
       <SidebarSeparator className="m-0" />
-      <SidebarContent>
-        <SidebarMenu>
-          <SidebarMenuItem className="flex items-center pt-2">
+      <SidebarContent className="gap-0">
+        <SidebarMenu className="border-b">
+          <SidebarMenuItem className="flex items-center">
             <SidebarMenuButton
               onClick={() => {
+                const path =
+                  selected_element?.type === "folder"
+                    ? selected_element.path
+                    : "";
                 open_form(
                   "folder",
-                  { name: "Untitled", path: "" },
+                  { name: "Untitled", path },
                   { title: "Create Folder", description: "Create a new folder" }
                 );
               }}
@@ -46,9 +50,13 @@ function ProjectSidebar() {
             </SidebarMenuButton>
             <SidebarMenuButton
               onClick={() => {
+                const path =
+                selected_element?.type === "folder"
+                  ? selected_element.path
+                  : "";
                 open_form(
                   "file",
-                  { name: "Untitled", path: "" },
+                  { name: "Untitled", path: path },
                   { title: "Create API", description: "Create a new API" }
                 );
               }}
@@ -57,7 +65,6 @@ function ProjectSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <SidebarSeparator className="m-0" />
         <SidebarMenu>
           <DndProvider backend={HTML5Backend}>
             <FileAndFolderContext elements={file_and_folders} />

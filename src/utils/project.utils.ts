@@ -85,65 +85,133 @@ export const update_hierarchy_id_by_index = (
   id: string,
   index: number
 ): Path => {
+  if (id === "") return index.toString() as Path;
   const paths = read_hierarchy_paths(id);
   paths[paths.length - 1] = index;
   return generate_hierarchy_id(paths);
 };
 
+export const get_path_from_id = (
+  elements: FileAndFoldersType[],
+  id: string,
+  level = 1
+): Path | undefined => {
+  try {
+    const is_array = Array.isArray(elements);
+    if (!is_array) return;
+    const hierarchy_id = get_hierarchy_id_by_level(level);
+    for (let i = 0; i < elements.length; i++) {
+      const current_element = elements[i];
+      const element_path_id = update_hierarchy_id_by_index(hierarchy_id, i);
+      if (current_element.id == id) return element_path_id;
+      if (current_element.type == "folder" && current_element.children.length) {
+        const children = current_element.children;
+        const element_path_id = get_path_from_id(children, id, level + 1);
+        if (element_path_id) return element_path_id;
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+};
+
 export const get_element_by_path = (
   elements: FileAndFoldersType | FileAndFoldersType[],
   path: Path,
-  level: number = 0
-): FileAndFoldersType | null => {
-  const is_array = Array.isArray(elements);
-  const level_id = get_hierarchy_id_by_level(level);
-  if (!is_array) {
-    if (level_id === path) return elements;
-  } else {
+  level = 1
+): FileAndFoldersType | undefined => {
+  try {
+    const is_array = Array.isArray(elements);
+    if (!is_array) return;
+    const hierarchy_id = get_hierarchy_id_by_level(level);
     for (let i = 0; i < elements.length; i++) {
-      const element_id = update_hierarchy_id_by_index(path, i);
-      const element = elements[i];
-      if (element_id === path) return element;
-      if (element.type == "folder") {
-        const children = element.children;
-        if (children.length) {
-          const child: FileAndFoldersType | null = get_element_by_path(
-            children,
-            path,
-            level + 1
-          );
-          if (child) return child;
+      const element_id = update_hierarchy_id_by_index(hierarchy_id, i);
+      const current_element = elements[i];
+      if (element_id === path) {
+        return current_element;
+      }
+      if (current_element.type == "folder" && current_element.children.length) {
+        const children = current_element.children;
+        const child = get_element_by_path(children, path, level + 1);
+        if (child) return child;
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+};
+
+export const add_element_by_path = (
+  elements: FileAndFoldersType | FileAndFoldersType[],
+  element: FileAndFoldersType,
+  path: Path = "",
+  level = 1
+): FileAndFoldersType[] | undefined => {
+  try {
+    const is_array = Array.isArray(elements);
+    if (path === "" && is_array) {
+      elements.push(element);
+      return elements;
+    }
+    if (!is_array) return;
+    const hierarchy_id = get_hierarchy_id_by_level(level);
+    for (let i = 0; i < elements.length; i++) {
+      const element_id = update_hierarchy_id_by_index(hierarchy_id, i);
+      const current_element = elements[i];
+      if (element_id === path) {
+        if (current_element.type !== "folder") return;
+        current_element.children.push(element);
+        return elements;
+      }
+      if (current_element.type == "folder" && current_element.children.length) {
+        const children = current_element.children;
+        const updated_children = add_element_by_path(
+          children,
+          element,
+          path,
+          level + 1
+        );
+        if (updated_children) {
+          elements[i] = {
+            ...current_element,
+            children: updated_children,
+          };
+          return elements;
         }
       }
     }
+    return;
+  } catch (error) {
+    console.error(error);
+    return;
   }
-  return null;
 };
 
 export const update_element_by_path = (
   elements: FileAndFoldersType | FileAndFoldersType[],
   updater: (element: FileAndFoldersType) => FileAndFoldersType,
-  path: Path,
-  level: number = 0
-): FileAndFoldersType[] | null => {
-  const is_array = Array.isArray(elements);
-  const level_id = get_hierarchy_id_by_level(level);
-  if (!is_array) {
-    if (level_id === path) {
-      updater(elements);
-      //@ts-ignore
-      return elements;
+  path: Path = "",
+  level = 1
+): FileAndFoldersType[] | undefined => {
+  try {
+    const is_array = Array.isArray(elements);
+    if (path === "" && is_array) {
+      return elements.map(updater);
     }
-  } else {
+    if (!is_array) return;
+    const hierarchy_id = get_hierarchy_id_by_level(level);
     for (let i = 0; i < elements.length; i++) {
-      const element_id = update_hierarchy_id_by_index(path, i);
-      const element = elements[i];
+      const element_id = update_hierarchy_id_by_index(hierarchy_id, i);
+      const current_element = elements[i];
       if (element_id === path) {
-        updater(element);
-        return elements;
+        return elements.map((element, index) =>
+          index === i ? updater(element) : element
+        );
       }
-      if (element.type == "folder" && element.children.length) {
-        const children = element.children;
+      if (current_element.type == "folder" && current_element.children.length) {
+        const children = current_element.children;
         const updated_children = update_element_by_path(
           children,
           updater,
@@ -152,37 +220,48 @@ export const update_element_by_path = (
         );
         if (updated_children) {
           elements[i] = {
-            ...element,
-            //@ts-ignore
+            ...current_element,
             children: updated_children,
           };
           return elements;
         }
       }
     }
+    return;
+  } catch (error) {
+    console.error(error);
+    return;
   }
-  return null;
 };
 
 export const remove_element_by_path = (
   elements: FileAndFoldersType | FileAndFoldersType[],
-  path: Path,
-  level: number = 0
-): FileAndFoldersType[] | null => {
-  const is_array = Array.isArray(elements);
-  const level_id = get_hierarchy_id_by_level(level);
-  if (!is_array) {
-    if (level_id === path) return null;
-  } else {
+  path: Path = "",
+  level = 1
+): FileAndFoldersType[] | undefined => {
+  try {
+    const is_array = Array.isArray(elements);
+    if (path === "" && is_array) {
+      const response = confirm(
+        "This will clear all the data in the project. Are you sure you want to delete this project?"
+      );
+      if (response) {
+        return [];
+      } else {
+        return elements;
+      }
+    }
+    if (!is_array) return;
+    const hierarchy_id = get_hierarchy_id_by_level(level);
     for (let i = 0; i < elements.length; i++) {
-      const element_id = update_hierarchy_id_by_index(path, i);
-      const element = elements[i];
+      const element_id = update_hierarchy_id_by_index(hierarchy_id, i);
+      const current_element = elements[i];
       if (element_id === path) {
         elements.splice(i, 1);
         return elements;
       }
-      if (element.type == "folder" && element.children.length) {
-        const children = element.children;
+      if (current_element.type == "folder" && current_element.children.length) {
+        const children = current_element.children;
         const updated_children = remove_element_by_path(
           children,
           path,
@@ -190,54 +269,51 @@ export const remove_element_by_path = (
         );
         if (updated_children) {
           elements[i] = {
-            ...element,
-            //@ts-ignore
+            ...current_element,
             children: updated_children,
           };
           return elements;
         }
       }
     }
+  } catch (error) {
+    console.error(error);
+    return;
   }
-  return null;
 };
 
-export const add_element_by_path = (
+export const move_element_to_path = (
   elements: FileAndFoldersType | FileAndFoldersType[],
-  element: FileAndFoldersType,
-  path: Path = "",
+  old_path: Path,
+  new_path: Path
 ): FileAndFoldersType[] | undefined => {
-  const is_array = Array.isArray(elements);
-  if (path === "" && is_array) {
-    elements.push(element);
-    return elements;
-  }
-  if (!is_array) return;
-  for (let i = 0; i < elements.length; i++) {
-    const element_id = update_hierarchy_id_by_index(path, i);
-    const current_element = elements[i];
-    if (element_id === path) {
-      if (current_element.type !== "folder") return;
-      current_element.children.push(element);
-      return elements;
+  try {
+    console.log("moving element");
+    console.log("old_path", old_path);
+    console.log("new_path", new_path);
+    const old_element = get_element_by_path(elements, old_path);
+    if (!old_element) return;
+    // const updated_elements = remove_element_by_path(elements, old_path);
+    // if (!updated_elements) return;
+    const updated_children = add_element_by_path(
+      elements,
+      old_element,
+      new_path
+    );
+    if (!updated_children) {
+      console.error("Error moving element");
+      console.info("reverting changes");
+      return remove_element_by_path(elements, new_path); 
     }
-    if (current_element.type == "folder" && current_element.children.length) {
-      const children = current_element.children;
-      const updated_children = add_element_by_path(
-        children,
-        element,
-        path,
-      );
-      if (updated_children) {
-        elements[i] = {
-          ...current_element,
-          children: updated_children,
-        };
-        return elements;
-      }
-    }
+
+    return remove_element_by_path(updated_children, old_path);
+
+
+    return updated_children;
+  } catch (error) {
+    console.error(error);
+    return;
   }
-  return;
 };
 
 export const create_folder = ({ path, ...rest }: FolderAdd): ApiFolder => {

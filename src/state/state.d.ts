@@ -29,6 +29,7 @@ interface ProjectStoreGet {
   projects: Project[];
   current_project: Project | null;
   current_project_id: string | null;
+  selected_element: (FileAndFoldersType & { path: Path }) | null;
 }
 
 interface ProjectStoreSet {
@@ -38,6 +39,12 @@ interface ProjectStoreSet {
   remove_project: (id: string) => void;
   add_folder: (folder: FolderAdd) => void;
   add_file: (file: FileAdd) => void;
+  update_folder: (folder: FolderUpdate) => void;
+  update_file: (file: FileUpdate) => void;
+  remove_element: (path: Path) => void;
+  select_element: (id: string) => void;
+  move_element_by_id: (from: string, to: string) => string | void;
+  move_element_by_path: (from: Path, to: Path) => void;
 }
 
 type ProjectStore = ProjectStoreGet & ProjectStoreSet;
@@ -52,12 +59,12 @@ interface FormInput {
   folder: {
     id?: string;
     name: string;
-    path: string;
+    path?: string;
   };
   file: {
     id?: string;
     name: string;
-    path: string;
+    path?: string;
   };
 }
 interface FormStateGetter {

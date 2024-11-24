@@ -1,16 +1,14 @@
 import { Box, Container } from "@/components/custom";
-import { use_project_store } from "@/state/project.state";
 import {} from "react";
 import ProjectNav from "./nav";
 import ProjectSidebar from "./sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { use_process_store } from "@/state";
 import { Separator } from "@/components/ui/separator";
+import { Outlet } from "react-router-dom";
 
 const Project = (_props: IProjectProps) => {
-  const {current_project} = use_project_store();
   const { sidebar, toggle_sidebar } = use_process_store();
-  console.log(current_project?.children);
   return (
     <SidebarProvider open={sidebar.open}>
       <ProjectSidebar />
@@ -20,6 +18,7 @@ const Project = (_props: IProjectProps) => {
           <Separator orientation="vertical" className="h-5 mx-4" />
           <ProjectNav />
         </Box>
+        <Outlet />
       </Container>
     </SidebarProvider>
   );
