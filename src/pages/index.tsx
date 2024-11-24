@@ -7,7 +7,8 @@ import { CorruptURL } from "./(info)/corrupt-url-info";
 import Settings from "./settings";
 import Api from "./project/api";
 import Folder from "./project/folder";
-import NotSelected from "./project/not-selected";
+import { StatusInfo } from "./(info)/status-info";
+import { Code } from "@/components/custom/code";
 
 const router = createBrowserRouter([
   {
@@ -20,9 +21,9 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path:"/settings",
-        Component: Settings
-      }
+        path: "/settings",
+        Component: Settings,
+      },
     ],
   },
   {
@@ -31,7 +32,12 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        Component: NotSelected,
+        element: (
+          <StatusInfo title="No Element Selected">
+            Please select an <Code>element</Code> from the <Code>sidebar</Code>{" "}
+            to view its details.
+          </StatusInfo>
+        ),
       },
       {
         path: "file/:api",
@@ -40,8 +46,8 @@ const router = createBrowserRouter([
       {
         path: "folder/:folder",
         Component: Folder,
-      }
-    ]
+      },
+    ],
   },
   // {
   //   path: "/project/:id",

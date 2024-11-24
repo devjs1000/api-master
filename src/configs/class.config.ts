@@ -1,5 +1,7 @@
 export const class_config = {
   all_center: "flex items-center justify-center",
+  full_screen: "h-screen w-screen",
+  full_size: "w-full h-full",
   ellipsis: "truncate",
   h1: "text-3xl font-bold",
   h2: "text-2xl font-bold",

@@ -4,7 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Box, Container } from "@/components/custom";
 import { Button } from "@/components/ui/button";
 
-export const ErrorInfo = (_props: IErrorInfoProps) => {
+export const ErrorInfo = () => {
   const error: any = useRouteError();
   const error_name = error?.name || error?.error?.name;
   const error_message = error?.message || error?.error?.message;
@@ -31,5 +31,3 @@ export const ErrorInfo = (_props: IErrorInfoProps) => {
     </Container>
   );
 };
-
-interface IErrorInfoProps {}
