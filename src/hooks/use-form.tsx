@@ -5,37 +5,34 @@ function use_form<T>({
   initial_value,
   validation_schema,
   on_submit,
-}: UseFormProps<T>) {
-  const [values, set_values] = useState<T>(initial_value as T);
-  const [errors, set_errors] = useState<Record<keyof T, string | false>>(
-    {} as any
-  );
+}: FormHookPropsType<T>): FormHookReturnType<T> {
+  const [values, set_values] = useState<T>(initial_value);
+  const [errors, set_errors] = useState<FormErrorsType<T>>({});
 
-  const extract_values = (key: keyof T) => {
+  const extract_values: ExtractValuesType<T> = (key) => {
     return _.get(values, key);
   };
 
-  const update_path = (obj: any, key: keyof T, value: any) => {
-    const cloned_values: any = _.cloneDeepWith(obj);
+  const update_path: UpdatePathType<T> = (obj, key, value) => {
+    const cloned_values = _.cloneDeepWith(obj);
     _.set(cloned_values, key, value);
     return cloned_values;
   };
 
-  const handle_change = (keyName: keyof T) => (value: any) => {
-    console.log(keyName, value);
-    set_values((prev) => update_path(prev, keyName, value) as any as T);
+  const handle_change: HandleChangeType<T> = (keyName) => (value) => {
+    set_values((prev) => update_path(prev, keyName, value));
   };
 
-  const update_value = (path: string, value: any) => {
+  const update_value: UpdateValueType = (path, value) => {
     set_values((prev) => {
-      const cloned_values: any = _.cloneDeepWith(prev);
-      _.set(cloned_values, path, value);
+      const cloned_values = _.cloneDeepWith(prev)
+      _.set<any>(cloned_values, path, value);
       return cloned_values;
     });
   };
 
-  const handle_submit = async () => {
-    set_errors({} as any);
+  const handle_submit:HandleSubmitType = async () => {
+    set_errors({});
     let numberOfErrors = 0;
     for (const key in values) {
       const validation = validation_schema?.[key];
@@ -56,13 +53,13 @@ function use_form<T>({
     });
   };
 
-  const register = (key: keyof T) => ({
+  const register:RegisterType<T> = (key) => ({
     value: values[key],
     onChange: handle_change(key),
     error: errors[key],
   });
 
-  const handle_reset = () => {
+  const handle_reset:HandleResetType = () => {
     set_values(initial_value);
     set_errors({} as any);
   };
@@ -80,13 +77,3 @@ function use_form<T>({
 }
 
 export default use_form;
-
-interface UseFormProps<T> {
-  initial_value: T;
-  validation_schema?: {
-    [key in keyof T]: (value: T[key]) => string | false;
-  };
-  on_submit: (values: T) => Promise<void>;
-}
-
-export type UseFormReturn<T> = ReturnType<typeof use_form<T>>;

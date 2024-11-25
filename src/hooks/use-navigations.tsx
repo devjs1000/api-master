@@ -1,13 +1,13 @@
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useCallback } from "react";
 
-export const use_navigations = () => {
+export const use_navigations: NavigationHookType = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [search_params, set_search_params] = useSearchParams();
 
-  const handle_navigate = useCallback(
-    (path: string, options?: HandleNavigateOptions) => {
+  const handle_navigate: HandleNavigateType = useCallback(
+    (path, options) => {
       navigate(path, {
         replace: options?.replace || false,
         state: options?.state,
@@ -16,12 +16,12 @@ export const use_navigations = () => {
     [navigate]
   );
 
-  const go_back = useCallback(() => {
+  const go_back: HandleGoBackType = useCallback(() => {
     navigate(-1);
   }, [navigate]);
 
-  const update_search_params = useCallback(
-    (params: Record<string, string>) => {
+  const update_search_params: UpdateSearchParamsType = useCallback(
+    (params) => {
       const new_params = new URLSearchParams(search_params);
       for (const key in params) {
         if (params[key]) {
@@ -43,8 +43,3 @@ export const use_navigations = () => {
     update_search_params,
   };
 };
-
-interface HandleNavigateOptions {
-  replace?: boolean;
-  state?: any;
-}
