@@ -3,9 +3,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "../../ui/textarea";
 import { Container } from "@/components/custom";
 import { cn } from "@/lib/utils";
-import { TagInput } from "@/components/custom/tag-input";
+import { TagInput } from "@/components/custom/inputs/tag-input";
 import { Button } from "@/components/ui/button";
-import { SelectInput } from "@/components/custom/select-input";
+import { SelectInput } from "@/components/custom/inputs/select-input";
 
 export const InputController: React.FC<IInputControllerProps> = (props) => {
   return (

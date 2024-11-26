@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { ITextWrapProps, TextWrap } from "../custom/text-wrap";
+import { ITextWrapProps, TextWrap } from "../custom/typography/text-wrap";
 
 export const CustomDropdown = (props: ICustomDropdownProps) => {
   return (

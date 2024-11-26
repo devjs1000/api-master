@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Box } from "./box";
-import { Input } from "../ui/input";
-import { Badge } from "../ui/badge";
-import { TextWrap } from "./text-wrap";
+import { Box } from "../layouts/box";
+import { Input } from "../../ui/input";
+import { Badge } from "../../ui/badge";
+import { TextWrap } from "../typography/text-wrap";
 import { XIcon } from "lucide-react";
 
 export const TagInput = (props: ITagInputProps) => {

@@ -1,5 +1,5 @@
 import { Box, Container } from "@/components/custom";
-import { Code } from "@/components/custom/code";
+import { Code } from "@/components/custom/typography/code";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, ArrowLeft } from "lucide-react";

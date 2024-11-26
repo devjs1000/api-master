@@ -8,7 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { DisclosureReturnType } from "@/hooks/use-disclosure";
 
 export const CustomModal = (props: CustomModalProps) => {
   return (
@@ -74,5 +73,5 @@ interface CustomModalProps {
   description?: string;
   trigger?: React.ReactNode;
   children: React.ReactNode;
-  disclosure?: Partial<DisclosureReturnType>;
+  disclosure?: Partial<DisclosureHookReturnType>;
 }

@@ -8,7 +8,7 @@ import Settings from "./settings";
 import Api from "./project/api";
 import Folder from "./project/folder";
 import { StatusInfo } from "./(info)/status-info";
-import { Code } from "@/components/custom/code";
+import { Code } from "@/components/custom/typography/code";
 
 const router = createBrowserRouter([
   {

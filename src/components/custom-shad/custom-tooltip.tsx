@@ -5,7 +5,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { TextWrap } from "../custom/text-wrap";
+import { TextWrap } from "../custom/typography/text-wrap";
 
 export const CustomTooltip = (props: ICustomTooltipProps) => {
   if (props.disabled) return props.children;

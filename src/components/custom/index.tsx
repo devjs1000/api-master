@@ -1,3 +1,3 @@
-export * from "./box";
-export * from "./container";
-export * from "./text-wrap";
+export * from "./inputs";
+export * from "./layouts";
+export * from "./typography";
