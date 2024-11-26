@@ -1,7 +1,7 @@
 import { Box } from "@/components/custom";
 import { CustomDropdown } from "@/components/custom-shad";
-import { use_form_global_state } from "@/state/form.state";
-import { use_project_store } from "@/state/project.state";
+import { use_form_global_state } from "@/states/form.state";
+import { use_project_store } from "@/states/project.state";
 import {  MoreVerticalIcon, PenIcon } from "lucide-react";
 import {} from "react";
 

@@ -7,7 +7,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import { use_project_store } from "@/state/project.state";
+import { use_project_store } from "@/states/project.state";
 import { CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import { FileIcon, FolderIcon } from "lucide-react";
 import { useDrag, useDrop } from "react-dnd";

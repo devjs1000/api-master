@@ -3,7 +3,7 @@ import { Box, Container, TextWrap } from "@/components/custom";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { StatusInfo } from "@/pages/(info)/status-info";
-import { use_project_store } from "@/state/project.state";
+import { use_project_store } from "@/states/project.state";
 import { formatDistance } from "date-fns";
 import { FolderIcon, InfoIcon } from "lucide-react";
 

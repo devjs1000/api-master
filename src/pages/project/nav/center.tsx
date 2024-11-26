@@ -1,5 +1,5 @@
 import { Box, TextWrap } from "@/components/custom";
-import { use_project_store } from "@/state/project.state";
+import { use_project_store } from "@/states/project.state";
 import {} from "react";
 
 export const CenterNav = (_props: ICenterNavProps) => {

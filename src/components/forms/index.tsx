@@ -1,4 +1,4 @@
-import { use_form_global_state } from "@/state/form.state";
+import { use_form_global_state } from "@/states/form.state";
 import {} from "react";
 import { CustomModal } from "../custom-shad/custom-modal";
 import ProjectForm from "./project.form";

@@ -1,2 +1,2 @@
-export * from "@/state/user.state";
-export * from "@/state/process.state";
+export * from "@/states/user.state";
+export * from "@/states/process.state";

@@ -1,5 +1,5 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { use_process_store } from "@/state";
+import { use_process_store } from "@/states";
 import { AppSidebar } from "@/pages/layout/app-sidebar";
 import { Outlet } from "react-router-dom";
 

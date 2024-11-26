@@ -1,8 +1,8 @@
 import {} from "react";
 import { QuickForm } from "../core/quick-form";
 import use_form from "@/hooks/use-form";
-import { use_project_store } from "@/state/project.state";
-import { use_form_global_state } from "@/state/form.state";
+import { use_project_store } from "@/states/project.state";
+import { use_form_global_state } from "@/states/form.state";
 
 const FolderForm = (_props: IProjectFormProps) => {
   const { form, close_form } = use_form_global_state();

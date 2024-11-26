@@ -1,14 +1,14 @@
 import { DataTable } from "@/components/custom-shad/data-table";
 import { create_columns } from "./columns";
 import { Container } from "@/components/custom";
-import { use_project_store } from "@/state/project.state";
+import { use_project_store } from "@/states/project.state";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import { toast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { local_get_project } from "@/utils";
 import { CreateNewCard } from "@/components/custom-shad";
-import { use_form_global_state } from "@/state/form.state";
+import { use_form_global_state } from "@/states/form.state";
 
 export const Projects = (_props: IProjectsProps) => {
   const project = use_project_store();

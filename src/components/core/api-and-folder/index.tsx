@@ -1,6 +1,6 @@
 import { Box, TextWrap } from "@/components/custom";
 import { Button } from "@/components/ui/button";
-import { use_project_store } from "@/state/project.state";
+import { use_project_store } from "@/states/project.state";
 import { FileIcon, FolderIcon, MoreVerticalIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 

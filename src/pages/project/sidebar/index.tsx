@@ -14,8 +14,8 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Actions, ProjectSidebarFooter } from "./footer";
 import { FileAndFolderContext } from "./file-and-folder-context";
-import { use_project_store } from "@/state/project.state";
-import { use_form_global_state } from "@/state/form.state";
+import { use_project_store } from "@/states/project.state";
+import { use_form_global_state } from "@/states/form.state";
 
 function ProjectSidebar() {
   const bottom_actions = useMemo(() => create_bottom_actions(), []);
