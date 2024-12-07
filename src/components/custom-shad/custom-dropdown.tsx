@@ -7,14 +7,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "../ui/button";
+import { Button, ButtonProps } from "../ui/button";
 import { ITextWrapProps, TextWrap } from "../custom/typography/text-wrap";
+import { cn } from "@/lib/utils";
 
 export const CustomDropdown = (props: ICustomDropdownProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-8 w-8 p-0">
+        <Button variant="ghost"  {...props.button_props} className={cn("h-8 w-8 p-0", props?.button_props?.className)}>
           {props?.children}
         </Button>
       </DropdownMenuTrigger>
@@ -73,6 +74,7 @@ interface ICustomDropdownProps {
     hide?: boolean;
   };
   children: React.ReactNode;
+  button_props?: ButtonProps;
 }
 
 interface DropdownItem {

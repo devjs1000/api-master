@@ -2,7 +2,7 @@ import { Box } from "@/components/custom";
 import { CustomDropdown } from "@/components/custom-shad";
 import { use_form_global_state } from "@/states/form.state";
 import { use_project_store } from "@/states/project.state";
-import {  MoreVerticalIcon, PenIcon } from "lucide-react";
+import { MoreVerticalIcon, PenIcon } from "lucide-react";
 import {} from "react";
 
 export const EndNav = (_props: IEndNavProps) => {
@@ -20,8 +20,8 @@ export const EndNav = (_props: IEndNavProps) => {
               open_form(
                 "project",
                 {
-                  description: current_project?.description || '',
-                  name: current_project?.name || '',
+                  description: current_project?.description || "",
+                  name: current_project?.name || "",
                   tags: current_project?.tags || [],
                   id: current_project?.id,
                 },
@@ -34,7 +34,7 @@ export const EndNav = (_props: IEndNavProps) => {
           },
         ]}
         menu={{
-          label: "Actions",
+          label: "Project Actions",
         }}
       >
         <MoreVerticalIcon size={24} />
