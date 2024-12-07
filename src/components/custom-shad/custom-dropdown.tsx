@@ -67,7 +67,7 @@ export const CustomDropdown = (props: ICustomDropdownProps) => {
 };
 
 interface ICustomDropdownProps {
-  items: (DropdownItem | React.ReactNode & DropdownElementType)[];
+  items: (DropdownItem | React.ReactNode | DropdownElementType)[];
   menu: {
     label: string;
     hide?: boolean;

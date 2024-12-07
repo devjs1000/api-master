@@ -41,7 +41,9 @@ interface ProjectStoreSet {
   add_file: (file: FileAdd) => void;
   update_folder: (folder: FolderUpdate) => void;
   update_file: (file: FileUpdate) => void;
+  sync_selected_element: () => void;
   remove_element: (path: Path) => void;
+  remove_element_by_id: (id: string) => void;
   select_element: (id: string) => void;
   move_element_by_id: (from: string, to: string) => string | void;
   move_element_by_path: (from: Path, to: Path) => void;

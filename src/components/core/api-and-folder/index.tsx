@@ -1,14 +1,21 @@
 import { Box, TextWrap } from "@/components/custom";
+import { CustomDropdown } from "@/components/custom-shad";
 import { Button } from "@/components/ui/button";
 import { use_project_store } from "@/states/project.state";
-import { FileIcon, FolderIcon, MoreVerticalIcon } from "lucide-react";
+import {
+  FileIcon,
+  FolderIcon,
+  MoreVerticalIcon,
+  TrashIcon,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export const APIAndFolder = ({ elements }: IAPIAndFolderProps) => {
-  const { select_element, current_project_id } = use_project_store();
+  const { select_element, current_project_id, remove_element_by_id } =
+    use_project_store();
   const navigate = useNavigate();
-
   const is_array = Array.isArray(elements);
+
   if (is_array) {
     return (
       <Box reset_ui className="flex flex-wrap gap-4">
@@ -18,6 +25,7 @@ export const APIAndFolder = ({ elements }: IAPIAndFolderProps) => {
       </Box>
     );
   }
+
   const is_folder = elements.type === "folder";
   const Icon = is_folder ? FolderIcon : FileIcon;
 
@@ -40,15 +48,32 @@ export const APIAndFolder = ({ elements }: IAPIAndFolderProps) => {
             {elements.name}
           </TextWrap>
         </Box>
-        <Button
-          variant={"ghost"}
-          className="text-sm"
-          onClick={(e) => {
-            e.stopPropagation();
+        <CustomDropdown
+          items={[
+            {
+              name: "delete",
+              label: "Delete",
+              Icon: TrashIcon,
+              on_click: () => {
+                remove_element_by_id(elements.id);
+              },
+            },
+          ]}
+          menu={{
+            label: "Actions",
+            hide: false,
           }}
         >
-          <MoreVerticalIcon size={18} />
-        </Button>
+          <Button
+            variant={"ghost"}
+            className="text-sm"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <MoreVerticalIcon size={18} />
+          </Button>
+        </CustomDropdown>
       </Box>
     </Box>
   );

@@ -159,6 +159,26 @@ export const use_project_store = create<ProjectStore>((set, get) => {
         local_update_project(current_project.id, updated_project);
       }
     },
+    sync_selected_element: () => {
+      const selected_element = get().selected_element;
+      if (!selected_element) return;
+      const current_project = get().current_project;
+      const current_project_children = current_project?.children;
+      if (!current_project_children) return;
+      const cloned_children = _.cloneDeepWith(current_project_children);
+      const path = selected_element.path;
+      const element = get_element_by_path(cloned_children, path);
+      if (!element) {
+        set({ selected_element: null });
+      } else {
+        set({
+          selected_element: {
+            path,
+            ...element,
+          },
+        });
+      }
+    },
     remove_element: (path) => {
       const current_project = get().current_project;
       const current_project_children = current_project?.children;
@@ -177,7 +197,17 @@ export const use_project_store = create<ProjectStore>((set, get) => {
           },
         });
         local_update_project(current_project.id, updated_project);
+        get().sync_selected_element();
       }
+    },
+    remove_element_by_id: (id) => {
+      const current_project = get().current_project;
+      const current_project_children = current_project?.children;
+      if (!current_project_children) return;
+      const cloned_children = _.cloneDeepWith(current_project_children);
+      const path = get_path_from_id(cloned_children, id);
+      if (!path) return;
+      get().remove_element(path);
     },
     select_element: (id) => {
       const current_project = get().current_project;
