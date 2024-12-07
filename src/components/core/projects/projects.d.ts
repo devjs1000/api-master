@@ -38,8 +38,8 @@ interface FolderUpdate {
 interface FileAdd {
   name: string;
   path: Path;
-  url: URLType;
   method: MethodType;
+  url: URLType;
   description: string;
   tags: string[];
 }
@@ -48,6 +48,9 @@ interface FileUpdate {
   name: string;
   path?: Path;
   method?: MethodType;
+  url?: URLType;
+  description?: string;
+  tags?: string[];
 }
 
 interface ApiFolder {

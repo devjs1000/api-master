@@ -1,4 +1,5 @@
 import { TextWrap } from "@/components/custom";
+import { CustomDropdown } from "@/components/custom-shad";
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 import {
   SidebarMenuButton,
@@ -7,9 +8,16 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+import { use_form_global_state } from "@/states/form.state";
 import { use_project_store } from "@/states/project.state";
 import { CollapsibleTrigger } from "@radix-ui/react-collapsible";
-import { FileIcon, FolderIcon } from "lucide-react";
+import {
+  Edit3Icon,
+  FileIcon,
+  FolderIcon,
+  MoreVerticalIcon,
+  TrashIcon,
+} from "lucide-react";
 import { useDrag, useDrop } from "react-dnd";
 import { useNavigate } from "react-router-dom";
 
@@ -22,12 +30,14 @@ export const FileAndFolder = ({
     select_element,
     current_project_id,
     // move_element_by_id,
+    remove_element_by_id,
+    get_path_from_id,
   } = use_project_store();
   const is_folder = element.type === "folder";
   const Icon = is_folder ? FolderIcon : FileIcon;
   const has_children = is_folder && element.children.length;
   const navigate = useNavigate();
-  const [{ isDragging }, dragRef] = useDrag({
+  const [{ isDragging }, _dragRef] = useDrag({
     type: element.type,
     item: {
       id: element.id,
@@ -37,17 +47,17 @@ export const FileAndFolder = ({
     },
     collect: (monitor) => ({ isDragging: monitor.isDragging() }),
   });
-  const [{ isOver, canDrop }, dropRef] = useDrop(
+  const [{ isOver, canDrop }, _dropRef] = useDrop(
     {
       accept: ["file", "folder"],
-      drop: (item, monitor) => {
+      drop: (_item, _monitor) => {
         // const didDrop = monitor.didDrop()
         // if(didDrop) return
         // const from_id=item.id
         // const to_id=element.id
         // move_element_by_id(from_id, to_id);
       },
-      hover: (item: any) => {
+      hover: (_item: any) => {
         // console.log(item.index, sibling_index);
       },
       collect: (monitor) => ({
@@ -57,7 +67,28 @@ export const FileAndFolder = ({
     },
     [element.id]
   );
-
+  const { open_form } = use_form_global_state();
+  const open_edit_form = () => {
+    const path = get_path_from_id(element.id);
+    if (!path) return;
+    open_form(
+      element.type,
+      { name: element.name, path: path, id: element.id },
+      { title: `Edit ${element.type}`, description: `Edit ${element.type}` }
+    );
+  };
+  const open_create_form = (el_type: FileAndFoldersType['type']) => {
+    const path = get_path_from_id(element.id);
+    if (!path) return;
+    open_form(
+      el_type,
+      {
+        name: "Untitled",
+        path: path,
+      },
+      { title: `Create ${el_type}`, description: `Create ${el_type}` }
+    );
+  };
   const is_selected = selected_element?.id === element.id;
   return (
     <Collapsible
@@ -73,7 +104,7 @@ export const FileAndFolder = ({
         isOver && "bg-zinc-100",
         canDrop && "bg-white border-dashed",
         isDragging && "opacity-50",
-        is_selected && "bg-blue-500 bg-opacity-10"
+        is_selected && "bg-zinc-500 bg-opacity-10"
       )}
       id={element.id}
       onClick={(e) => {
@@ -86,20 +117,63 @@ export const FileAndFolder = ({
     >
       <SidebarMenuItem>
         <CollapsibleTrigger className="w-full">
-          <SidebarMenuButton className={"hover:bg-transparent"}>
-            <Icon />
+          <SidebarMenuButton
+            className={cn("hover:bg-transparent")}
+            isActive={is_selected}
+          >
+            <Icon
+              size={18}
+              className={cn("text-gray-500", is_selected && "text-blue-500")}
+            />
             <TextWrap
               type="p4"
-              className={cn(is_selected && "font-bold text-blue-500")}
+              className={cn("flex-1", is_selected && "font-bold text-blue-500")}
             >
               {element.name}{" "}
               {has_children ? `(${element.children.length})` : ""}
             </TextWrap>
+            <CustomDropdown
+              menu={{
+                label: "Actions",
+              }}
+              items={[
+                {
+                  name: "folder",
+                  label: "New Folder",
+                  Icon: FolderIcon,
+                  on_click: ()=>open_create_form('folder'),
+                  hide: !is_folder,
+                },
+                {
+                  name: "file",
+                  label: "New File",
+                  Icon: FileIcon,
+                  on_click: ()=>open_create_form("file"),
+                  hide: !is_folder,
+                },
+                {
+                  name: "edit",
+                  label: "Edit",
+                  Icon: Edit3Icon,
+                  on_click: open_edit_form,
+                },
+                {
+                  name: "delete",
+                  label: "Delete",
+                  Icon: TrashIcon,
+                  on_click: () => {
+                    remove_element_by_id(element.id);
+                  },
+                },
+              ]}
+            >
+              <MoreVerticalIcon size={18} />
+            </CustomDropdown>
           </SidebarMenuButton>
         </CollapsibleTrigger>
         {has_children ? (
           <CollapsibleContent>
-            <SidebarMenuSub className="mr-0 px-0 border-l-blue-500">
+            <SidebarMenuSub className="mr-0 px-0 border-l-zinc-500">
               <SidebarMenuSubItem>
                 {element.children.map((child, index) => (
                   <FileAndFolder

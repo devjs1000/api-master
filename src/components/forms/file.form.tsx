@@ -6,24 +6,38 @@ import { create_mappable } from "@/utils/mappable.utils";
 
 const FileForm = (_props: IProjectFormProps) => {
   const { form, close_form } = use_form_global_state();
-  const { add_file } = use_project_store();
+  const { add_file, get_element_by_id, update_file } = use_project_store();
+  const edit = form?.id;
+  const form_data = edit ? get_element_by_id(form?.id) : form;
   const form_hook = use_form({
     initial_value: {
-      name: form?.name,
-      description: form?.description,
-      tags: form?.tags,
-      method: form?.method || "GET",
-      url: form?.url || "http://",
+      name: form_data?.name,
+      description: form_data?.description,
+      tags: form_data?.tags,
+      method: form_data?.method || "GET",
+      url: form_data?.url || "http://",
     },
     async on_submit(values) {
-      add_file({
-        name: values.name,
-        path: form?.path,
-        description: values.description,
-        tags: values.tags,
-        method: values.method as MethodType,
-        url: values.url as URLType,
-      });
+      if (edit) {
+        update_file({
+          name: values.name,
+          path: form?.path,
+          description: values.description,
+          tags: values.tags,
+          method: values.method as MethodType,
+          url: values.url as URLType,
+        });
+      } else {
+        add_file({
+          name: values.name,
+          path: form?.path,
+          description: values.description,
+          tags: values.tags,
+          method: values.method as MethodType,
+          url: values.url as URLType,
+        });
+      }
+
       close_form();
     },
   });
@@ -54,9 +68,9 @@ const FileForm = (_props: IProjectFormProps) => {
               title: true,
               description: true,
             },
-           child_container:{
-            class_name: "w-full flex flex-start gap-2"
-           },
+            child_container: {
+              class_name: "w-full flex flex-start gap-2",
+            },
             children: [
               {
                 core_type: "input",
@@ -77,7 +91,7 @@ const FileForm = (_props: IProjectFormProps) => {
                 },
                 container: {
                   class_name: "w-[100px]",
-                }
+                },
               },
               {
                 core_type: "input",

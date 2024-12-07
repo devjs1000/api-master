@@ -59,7 +59,7 @@ const Folder = () => {
         </Box>
         <Box reset_ui className="flex items-center gap-4 mt-2 ">
           {selected_element.tags.map((tag, index) => (
-            <Badge key={index} variant={"default"} className="bg-blue-500">
+            <Badge key={index} variant={"default"} >
               {tag}
             </Badge>
           ))}

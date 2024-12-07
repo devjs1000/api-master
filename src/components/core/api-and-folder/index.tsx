@@ -1,8 +1,10 @@
 import { Box, TextWrap } from "@/components/custom";
 import { CustomDropdown } from "@/components/custom-shad";
 import { Button } from "@/components/ui/button";
+import { use_form_global_state } from "@/states/form.state";
 import { use_project_store } from "@/states/project.state";
 import {
+  Edit3Icon,
   FileIcon,
   FolderIcon,
   MoreVerticalIcon,
@@ -11,10 +13,15 @@ import {
 import { useNavigate } from "react-router-dom";
 
 export const APIAndFolder = ({ elements }: IAPIAndFolderProps) => {
-  const { select_element, current_project_id, remove_element_by_id } =
-    use_project_store();
+  const {
+    select_element,
+    current_project_id,
+    remove_element_by_id,
+    get_path_from_id,
+  } = use_project_store();
   const navigate = useNavigate();
   const is_array = Array.isArray(elements);
+  const { open_form } = use_form_global_state();
 
   if (is_array) {
     return (
@@ -25,6 +32,29 @@ export const APIAndFolder = ({ elements }: IAPIAndFolderProps) => {
       </Box>
     );
   }
+
+  const open_edit_form = () => {
+    const path = get_path_from_id(elements.id);
+    if (!path) return;
+    open_form(
+      elements.type,
+      { name: elements.name, path: path, id: elements.id },
+      { title: `Edit ${elements.type}`, description: `Edit ${elements.type}` }
+    );
+  };
+  
+  const open_create_form = (el_type: FileAndFoldersType["type"]) => {
+    const path = get_path_from_id(elements.id);
+    if (!path) return;
+    open_form(
+      el_type,
+      {
+        name: "Untitled",
+        path: path,
+      },
+      { title: `Create ${el_type}`, description: `Create ${el_type}` }
+    );
+  };
 
   const is_folder = elements.type === "folder";
   const Icon = is_folder ? FolderIcon : FileIcon;
@@ -50,6 +80,26 @@ export const APIAndFolder = ({ elements }: IAPIAndFolderProps) => {
         </Box>
         <CustomDropdown
           items={[
+            {
+              name: "folder",
+              label: "New Folder",
+              Icon: FolderIcon,
+              on_click: () => open_create_form("folder"),
+              hide: !is_folder,
+            },
+            {
+              name: "file",
+              label: "New File",
+              Icon: FileIcon,
+              on_click: () => open_create_form("file"),
+              hide: !is_folder,
+            },
+            {
+              name: "edit",
+              label: "Edit",
+              Icon: Edit3Icon,
+              on_click: open_edit_form,
+            },
             {
               name: "delete",
               label: "Delete",

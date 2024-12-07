@@ -32,6 +32,7 @@ export const use_project_store = create<ProjectStore>((set, get) => {
     add_project: (project) => {
       local_add_project(project);
       set({ projects: local_projects_without_children() });
+      get().sync_selected_element();
     },
     open_project: (id) => {
       const project = local_get_project(id);
@@ -50,6 +51,7 @@ export const use_project_store = create<ProjectStore>((set, get) => {
       set({
         projects: local_projects_without_children(),
       });
+      get().sync_selected_element();
     },
     add_folder: (params) => {
       const current_project = get().current_project;
@@ -74,6 +76,7 @@ export const use_project_store = create<ProjectStore>((set, get) => {
           },
         });
         local_update_project(current_project.id, updated_project);
+        get().sync_selected_element();
       }
     },
     add_file: (params) => {
@@ -99,6 +102,7 @@ export const use_project_store = create<ProjectStore>((set, get) => {
           },
         });
         local_update_project(current_project.id, updated_project);
+        get().sync_selected_element();
       }
     },
     update_folder: ({ path, ...params }) => {
@@ -128,6 +132,7 @@ export const use_project_store = create<ProjectStore>((set, get) => {
           },
         });
         local_update_project(current_project.id, updated_project);
+        get().sync_selected_element();
       }
     },
     update_file: ({ path, ...params }) => {
@@ -157,6 +162,7 @@ export const use_project_store = create<ProjectStore>((set, get) => {
           },
         });
         local_update_project(current_project.id, updated_project);
+        get().sync_selected_element()
       }
     },
     sync_selected_element: () => {
@@ -255,6 +261,20 @@ export const use_project_store = create<ProjectStore>((set, get) => {
       const to_path = get_path_from_id(cloned_children, to);
       if (!from_path || !to_path) return "path not found";
       get().move_element_by_path(from_path, to_path);
+    },
+    get_path_from_id: (id) => {
+      const current_project = get().current_project;
+      const current_project_children = current_project?.children;
+      if (!current_project_children) return null;
+      return get_path_from_id(current_project_children, id) || null;
+    },
+    get_element_by_id: (id) => {
+      const current_project = get().current_project;
+      const current_project_children = current_project?.children;
+      if (!current_project_children) return null;
+      const path = get_path_from_id(current_project_children, id);
+      if (!path) return null;
+      return get_element_by_path(current_project_children, path) || null;
     },
   };
 });

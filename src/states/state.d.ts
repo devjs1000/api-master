@@ -47,6 +47,8 @@ interface ProjectStoreSet {
   select_element: (id: string) => void;
   move_element_by_id: (from: string, to: string) => string | void;
   move_element_by_path: (from: Path, to: Path) => void;
+  get_path_from_id: (id: string) => Path | null;
+  get_element_by_id: (id: string) => FileAndFoldersType | null;
 }
 
 type ProjectStore = ProjectStoreGet & ProjectStoreSet;

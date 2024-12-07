@@ -6,20 +6,31 @@ import { use_form_global_state } from "@/states/form.state";
 
 const FolderForm = (_props: IProjectFormProps) => {
   const { form, close_form } = use_form_global_state();
-  const { add_folder } = use_project_store();
+  const { add_folder, get_element_by_id, update_folder } = use_project_store();
+  const edit = form?.id;
+  const form_data = edit ? get_element_by_id(form?.id) : form;
   const form_hook = use_form({
     initial_value: {
-      name: form?.name,
-      description: form?.description,
-      tags: form?.tags,
+      name: form_data?.name,
+      description: form_data?.description,
+      tags: form_data?.tags,
     },
     async on_submit(values) {
-      add_folder({
-        name: values.name,
-        path: form?.path,
-        description: values.description,
-        tags: values.tags,
-      });
+      if (edit) {
+        update_folder({
+          name: values.name,
+          path: form?.path,
+          description: values.description,
+          tags: values.tags,
+        })
+      } else {
+        add_folder({
+          name: values.name,
+          path: form?.path,
+          description: values.description,
+          tags: values.tags,
+        });
+      }
       close_form();
     },
   });

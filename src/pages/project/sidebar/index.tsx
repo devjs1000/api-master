@@ -19,9 +19,25 @@ import { use_form_global_state } from "@/states/form.state";
 
 function ProjectSidebar() {
   const bottom_actions = useMemo(() => create_bottom_actions(), []);
-  const { current_project, selected_element } = use_project_store();
+  const { current_project } = use_project_store();
   const file_and_folders = current_project?.children || [];
   const { open_form } = use_form_global_state();
+  const open_folder_create_form = () => {
+    open_form(
+      "folder",
+      { name: "Untitled", path: "" },
+      { title: "Create Folder", description: "Create a new folder" }
+    );
+  };
+
+  const open_api_create_form = () => {
+    open_form(
+      "file",
+      { name: "Untitled", path: "" },
+      { title: "Create API", description: "Create a new API" }
+    );
+  };
+
   return (
     <Sidebar variant="sidebar">
       <SidebarHeader>
@@ -33,34 +49,10 @@ function ProjectSidebar() {
       <SidebarContent className="gap-0">
         <SidebarMenu className="border-b">
           <SidebarMenuItem className="flex items-center">
-            <SidebarMenuButton
-              onClick={() => {
-                const path =
-                  selected_element?.type === "folder"
-                    ? selected_element.path
-                    : "";
-                open_form(
-                  "folder",
-                  { name: "Untitled", path },
-                  { title: "Create Folder", description: "Create a new folder" }
-                );
-              }}
-            >
+            <SidebarMenuButton onClick={open_folder_create_form}>
               <PlusIcon /> <TextWrap type="p4">Folder</TextWrap>
             </SidebarMenuButton>
-            <SidebarMenuButton
-              onClick={() => {
-                const path =
-                selected_element?.type === "folder"
-                  ? selected_element.path
-                  : "";
-                open_form(
-                  "file",
-                  { name: "Untitled", path: path },
-                  { title: "Create API", description: "Create a new API" }
-                );
-              }}
-            >
+            <SidebarMenuButton onClick={open_api_create_form}>
               <PlusIcon /> <TextWrap type="p4">Api</TextWrap>
             </SidebarMenuButton>
           </SidebarMenuItem>
