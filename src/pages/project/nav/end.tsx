@@ -9,7 +9,7 @@ export const EndNav = (_props: IEndNavProps) => {
   const { open_form } = use_form_global_state();
   const { current_project } = use_project_store();
   return (
-    <Box reset_ui className="flex justify-end">
+    <Box reset_ui className="flex justify-end" id="project-nav-end">
       <CustomDropdown
         items={[
           {

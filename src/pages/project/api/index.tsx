@@ -2,8 +2,8 @@ import { Box, Container, TextWrap } from "@/components/custom";
 import { CustomDropdown } from "@/components/custom-shad";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { use_menu } from "@/hooks/use-menu";
 import { StatusInfo } from "@/pages/(info)/status-info";
-import { use_form_global_state } from "@/states/form.state";
 import { use_project_store } from "@/states/project.state";
 import { formatDistance } from "date-fns";
 import {
@@ -15,9 +15,7 @@ import {
 } from "lucide-react";
 
 const Api = () => {
-  const { remove_element_by_id, get_path_from_id, selected_element } =
-    use_project_store();
-  const { open_form } = use_form_global_state();
+  const { remove_element_by_id, selected_element } = use_project_store();
   if (selected_element?.type === "folder") {
     return (
       <StatusInfo title="Invalid Selection">
@@ -25,6 +23,11 @@ const Api = () => {
       </StatusInfo>
     );
   }
+
+  const { open_edit_form } = use_menu({
+    element: selected_element || undefined,
+  });
+
   if (!selected_element) {
     return (
       <StatusInfo title="No File Selected">
@@ -32,18 +35,6 @@ const Api = () => {
       </StatusInfo>
     );
   }
-  const open_edit_form = () => {
-    const path = get_path_from_id(selected_element.id);
-    if (!path) return;
-    open_form(
-      selected_element.type,
-      { name: selected_element.name, path: path, id: selected_element.id },
-      {
-        title: `Edit ${selected_element.type}`,
-        description: `Edit ${selected_element.type}`,
-      }
-    );
-  };
 
   const is_updated =
     new Date(selected_element?.updated_at).getTime() !==
@@ -98,7 +89,7 @@ const Api = () => {
           </CustomDropdown>
         </Box>
         <Box reset_ui className="flex items-center gap-4 mt-2 ">
-          {selected_element.tags.map((tag, index) => (
+          {selected_element?.tags?.map?.((tag, index) => (
             <Badge key={index} variant={"default"}>
               {tag}
             </Badge>
@@ -111,6 +102,7 @@ const Api = () => {
           </TextWrap>
         </Box>
       </Container>
+
       <Separator />
     </Container>
   );

@@ -7,10 +7,11 @@ import {} from "react";
 export const StartNav = (_props: IStartNavProps) => {
   const { go_back } = use_navigations();
   return (
-    <Box reset_ui className="flex justify-start">
-      <Button onClick={go_back} variant={"ghost"} >
-        <ArrowLeftIcon size={28} />
-      </Button>
+    <Box reset_ui className="flex justify-start" id="project-nav-start" >
+
+    <Button onClick={go_back} variant={"ghost"}>
+      <ArrowLeftIcon size={28} />
+    </Button>
     </Box>
   );
 };

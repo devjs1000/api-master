@@ -5,7 +5,11 @@ import {} from "react";
 export const CenterNav = (_props: ICenterNavProps) => {
   const { current_project } = use_project_store();
   return (
-    <Box reset_ui className="flex flex-col gap-1 flex-grow">
+    <Box
+      reset_ui
+      className="flex flex-col gap-1 flex-grow"
+      id="project-nav-center"
+    >
       <TextWrap className="block capitalize" type="h3">
         {current_project?.name || "No Project Selected"}
       </TextWrap>

@@ -15,29 +15,13 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { Actions, ProjectSidebarFooter } from "./footer";
 import { FileAndFolderContext } from "./file-and-folder-context";
 import { use_project_store } from "@/states/project.state";
-import { use_form_global_state } from "@/states/form.state";
+import { use_menu } from "@/hooks/use-menu";
 
 function ProjectSidebar() {
   const bottom_actions = useMemo(() => create_bottom_actions(), []);
   const { current_project } = use_project_store();
   const file_and_folders = current_project?.children || [];
-  const { open_form } = use_form_global_state();
-  const open_folder_create_form = () => {
-    open_form(
-      "folder",
-      { name: "Untitled", path: "" },
-      { title: "Create Folder", description: "Create a new folder" }
-    );
-  };
-
-  const open_api_create_form = () => {
-    open_form(
-      "file",
-      { name: "Untitled", path: "" },
-      { title: "Create API", description: "Create a new API" }
-    );
-  };
-
+  const { open_create_form } = use_menu({});
   return (
     <Sidebar variant="sidebar">
       <SidebarHeader>
@@ -49,10 +33,18 @@ function ProjectSidebar() {
       <SidebarContent className="gap-0">
         <SidebarMenu className="border-b">
           <SidebarMenuItem className="flex items-center">
-            <SidebarMenuButton onClick={open_folder_create_form}>
+            <SidebarMenuButton
+              onClick={() => {
+                open_create_form("folder", "");
+              }}
+            >
               <PlusIcon /> <TextWrap type="p4">Folder</TextWrap>
             </SidebarMenuButton>
-            <SidebarMenuButton onClick={open_api_create_form}>
+            <SidebarMenuButton
+              onClick={() => {
+                open_create_form("file", "");
+              }}
+            >
               <PlusIcon /> <TextWrap type="p4">Api</TextWrap>
             </SidebarMenuButton>
           </SidebarMenuItem>

@@ -7,8 +7,7 @@ import { CorruptURL } from "./(info)/corrupt-url-info";
 import Settings from "./settings";
 import Api from "./project/api";
 import Folder from "./project/folder";
-import { StatusInfo } from "./(info)/status-info";
-import { Code } from "@/components/custom/typography/code";
+import { ProjectEmpty } from "./project/empty";
 
 const router = createBrowserRouter([
   {
@@ -32,12 +31,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: (
-          <StatusInfo title="No Element Selected">
-            Please select an <Code>element</Code> from the <Code>sidebar</Code>{" "}
-            to view its details.
-          </StatusInfo>
-        ),
+        Component: ProjectEmpty
       },
       {
         path: "file/:api",

@@ -7,8 +7,8 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import { use_menu } from "@/hooks/use-menu";
 import { cn } from "@/lib/utils";
-import { use_form_global_state } from "@/states/form.state";
 import { use_project_store } from "@/states/project.state";
 import { CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import {
@@ -31,7 +31,6 @@ export const FileAndFolder = ({
     current_project_id,
     // move_element_by_id,
     remove_element_by_id,
-    get_path_from_id,
   } = use_project_store();
   const is_folder = element.type === "folder";
   const Icon = is_folder ? FolderIcon : FileIcon;
@@ -67,28 +66,7 @@ export const FileAndFolder = ({
     },
     [element.id]
   );
-  const { open_form } = use_form_global_state();
-  const open_edit_form = () => {
-    const path = get_path_from_id(element.id);
-    if (!path) return;
-    open_form(
-      element.type,
-      { name: element.name, path: path, id: element.id },
-      { title: `Edit ${element.type}`, description: `Edit ${element.type}` }
-    );
-  };
-  const open_create_form = (el_type: FileAndFoldersType['type']) => {
-    const path = get_path_from_id(element.id);
-    if (!path) return;
-    open_form(
-      el_type,
-      {
-        name: "Untitled",
-        path: path,
-      },
-      { title: `Create ${el_type}`, description: `Create ${el_type}` }
-    );
-  };
+  const {open_create_form, open_edit_form} = use_menu({ element: element });
   const is_selected = selected_element?.id === element.id;
   return (
     <Collapsible
@@ -141,14 +119,14 @@ export const FileAndFolder = ({
                   name: "folder",
                   label: "New Folder",
                   Icon: FolderIcon,
-                  on_click: ()=>open_create_form('folder'),
+                  on_click: () => open_create_form("folder"),
                   hide: !is_folder,
                 },
                 {
                   name: "file",
                   label: "New File",
                   Icon: FileIcon,
-                  on_click: ()=>open_create_form("file"),
+                  on_click: () => open_create_form("file"),
                   hide: !is_folder,
                 },
                 {

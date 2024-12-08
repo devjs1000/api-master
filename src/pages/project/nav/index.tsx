@@ -1,12 +1,12 @@
+import { Box } from "@/components/custom";
 import {} from "react";
 import { StartNav } from "./start";
 import { CenterNav } from "./center";
 import { EndNav } from "./end";
-import { Box } from "@/components/custom";
 
-const ProjectNav = (_props: IProjectNavProps) => {
+export const ProjectNav: React.FC<Props> = () => {
   return (
-    <Box reset_ui className="flex items-center w-full gap-4">
+    <Box reset_ui className="flex items-center w-full gap-2">
       <StartNav />
       <CenterNav />
       <EndNav />
@@ -14,6 +14,4 @@ const ProjectNav = (_props: IProjectNavProps) => {
   );
 };
 
-export default ProjectNav;
-
-interface IProjectNavProps {}
+interface Props {}
