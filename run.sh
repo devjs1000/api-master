@@ -1,0 +1,1 @@
+vite & open http://localhost:1420/

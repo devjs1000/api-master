@@ -14,13 +14,18 @@ type UserStore = UserStoreGet & UserStoreSet;
 
 interface ProcessStoreGet {
   sidebar: {
-    open: boolean;
+    project: boolean;
+  };
+  navbar: {
+    project: boolean;
   };
 }
 
 interface ProcessStoreSet {
-  set_sidebar: (open: boolean) => void;
-  toggle_sidebar: () => void;
+  set_sidebar: (name: keyof ProcessStoreGet["sidebar"], open: boolean) => void;
+  toggle_sidebar: (name: keyof ProcessStoreGet["sidebar"]) => void;
+  set_navbar: (name: keyof ProcessStoreGet["navbar"], open: boolean) => void;
+  toggle_navbar: (name: keyof ProcessStoreGet["navbar"]) => void;
 }
 
 type ProcessStore = ProcessStoreGet & ProcessStoreSet;
