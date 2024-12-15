@@ -3,6 +3,7 @@ import use_form from "@/hooks/use-form";
 import { use_project_store } from "@/states/project.state";
 import { use_form_global_state } from "@/states/form.state";
 import { create_mappable } from "@/utils/mappable.utils";
+import { lists } from "@/configs/lists.config";
 
 const FileForm = (_props: IProjectFormProps) => {
   const { form, close_form } = use_form_global_state();
@@ -81,13 +82,7 @@ const FileForm = (_props: IProjectFormProps) => {
                 default_value: "GET",
                 placeholder: "Select the method",
                 props: {
-                  data: create_mappable([
-                    "GET",
-                    "POST",
-                    "PUT",
-                    "PATCH",
-                    "DELETE",
-                  ]),
+                  data: create_mappable(lists.api.methods)
                 },
                 container: {
                   class_name: "w-[100px]",

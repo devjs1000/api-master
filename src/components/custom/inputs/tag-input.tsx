@@ -4,6 +4,7 @@ import { Input } from "../../ui/input";
 import { Badge } from "../../ui/badge";
 import { TextWrap } from "../typography/text-wrap";
 import { XIcon } from "lucide-react";
+import { Separator } from "@radix-ui/react-separator";
 
 export const TagInput = (props: ITagInputProps) => {
   const [input, setInput] = useState("");
@@ -15,9 +16,14 @@ export const TagInput = (props: ITagInputProps) => {
   };
   const handle_key_down = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      const existing_tag_index = props?.value?.findIndex((tag) => tag === input);
+      const existing_tag_index = props?.value?.findIndex(
+        (tag) => tag === input
+      );
       if (existing_tag_index !== -1) {
-        props?.onChange?.([...props?.value?.filter((_, i) => i !== existing_tag_index), input]);
+        props?.onChange?.([
+          ...props?.value?.filter((_, i) => i !== existing_tag_index),
+          input,
+        ]);
         setInput("");
         return;
       }
@@ -39,14 +45,15 @@ export const TagInput = (props: ITagInputProps) => {
         {props.value.map((tag, index) => (
           <Badge
             key={index}
-            variant={"secondary"}
+            variant={"default"}
             defaultChecked
-            className="group"
+            className="px-2 justify-between items-center"
           >
-            <TextWrap className="group-hover:text-zinc-600">{tag}</TextWrap>
+            {tag}
+            <Separator orientation="vertical" className="w-2" />
             <XIcon
-              className="text-red-500 group-hover:text-red-500 cursor-pointer"
-              size={16}
+              className="cursor-pointer"
+              size={12}
               onClick={() => handle_tag_remove(index)}
             />
           </Badge>

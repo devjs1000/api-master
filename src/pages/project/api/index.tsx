@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { StatusInfo } from "@/pages/(info)/status-info";
 import { use_project_store } from "@/states/project.state";
 import { APINav } from "./nav";
+import { APIEditor } from "./editor";
 
 const Api = () => {
   const { selected_element } = use_project_store();
@@ -26,6 +27,7 @@ const Api = () => {
     <Container className="bg-zinc-100 p-0" full_size>
       <APINav />
       <Separator />
+      <APIEditor />
     </Container>
   );
 };
